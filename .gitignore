@@ -14,8 +14,9 @@ build/
 backend/.env
 frontend/react-app/.env
 
-# Local development / explore folder (large media duplicate)
-frontend/explore/
+# Explore project
+frontend/explore/**/node_modules/
+frontend/explore/**/dist/
 
 # IDE & OS
 .vscode/
