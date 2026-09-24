@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Readify — Admin Dashboard</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+  <!-- ═══════════════════════ LOGIN PAGE ═══════════════════════ -->
+  <div id="loginPage">
+    <!-- Animated background particles -->
+    <div class="login-bg-fx">
+      <div class="login-orb orb-1"></div>
+      <div class="login-orb orb-2"></div>
+      <div class="login-orb orb-3"></div>
+      <div class="login-grid-lines"></div>
+    </div>
+
+    <div class="login-outer">
+      <!-- Left decorative panel -->
+      <div class="login-deco">
+        <div class="deco-brand">
+          <div class="logo-icon">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 26A3 3 0 0 1 9 23H26V5H9A3 3 0 0 0 6 8V26Z" stroke="white" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" opacity=".5" />
+              <path d="M6 26A3 3 0 0 1 9 23H26" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" opacity=".5" />
+              <path d="M16 9L17.5 14L22 15.5L17.5 17L16 22L14.5 17L10 15.5L14.5 14L16 9Z" fill="white" />
+              <circle cx="23" cy="10" r="1.2" fill="white" opacity=".6" />
+              <circle cx="11" cy="21" r="1" fill="white" opacity=".4" />
+            </svg>
+          </div>
+          <div class="brand-name">Read<em>ify</em></div>
+        </div>
+
+        <div class="deco-tagline">
+          <h2>Command Center<br>for Your Library</h2>
+          <p>Complete control over users, books, analytics, and platform settings — all in one powerful dashboard.</p>
+        </div>
+
+        <div class="deco-stats">
+          <div class="deco-stat-item">
+            <div class="deco-stat-icon">📊</div>
+            <div class="deco-stat-info">
+              <span class="deco-stat-title">Live Analytics</span>
+              <span class="deco-stat-desc">Real-time charts &amp; insights</span>
+            </div>
+          </div>
+          <div class="deco-stat-item">
+            <div class="deco-stat-icon">🛡️</div>
+            <div class="deco-stat-info">
+              <span class="deco-stat-title">Secure Access</span>
+              <span class="deco-stat-desc">JWT token authentication</span>
+            </div>
+          </div>
+          <div class="deco-stat-item">
+            <div class="deco-stat-icon">📖</div>
+            <div class="deco-stat-info">
+              <span class="deco-stat-title">Full Control</span>
+              <span class="deco-stat-desc">Users, books &amp; orders</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="deco-version">Admin Portal v2.0</div>
+      </div>
+
+      <!-- Right form panel -->
+      <div class="login-form-panel">
+        <div class="form-avatar">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="23" stroke="url(#avatarGrad)" stroke-width="2" fill="none" />
+            <circle cx="24" cy="19" r="7" fill="url(#avatarGrad)" />
+            <path d="M12 38c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="url(#avatarGrad)" stroke-width="2"
+              fill="none" />
+            <defs>
+              <linearGradient id="avatarGrad" x1="0" y1="0" x2="48" y2="48">
+                <stop stop-color="#f59e0b" />
+                <stop offset="1" stop-color="#d97706" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="form-title">Welcome Back</div>
+        <div class="form-sub">Sign in to your admin dashboard</div>
+
+        <form id="loginForm">
+          <div class="form-row">
+            <label for="email">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m22 4-10 8L2 4" />
+              </svg>
+              Email Address
+            </label>
+            <input type="email" id="email" placeholder="admin@readify.com" required autocomplete="email">
+          </div>
+          <div class="form-row">
+            <label for="password">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                <circle cx="12" cy="16" r="1" />
+              </svg>
+              Password
+            </label>
+            <div class="password-wrap">
+              <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+              <button type="button" class="pw-toggle" onclick="togglePw()" tabindex="-1" title="Show password">
+                <svg id="pwEyeOpen" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                <svg id="pwEyeClosed" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" style="display:none">
+                  <path
+                    d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                  <line x1="1" y1="1" x2="23" y2="23" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="login-error-msg" id="loginError"></div>
+          <button type="submit" class="login-submit" id="loginBtn">
+            <span class="btn-text">Sign In</span>
+            <span class="btn-arrow">→</span>
+            <span class="btn-loader" id="loginLoader"></span>
+          </button>
+        </form>
+
+        <div class="login-footer-note">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            opacity=".5">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+          Secured with 256-bit encryption
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ ADMIN SECTION ═══════════════════════ -->
+  <div id="adminSection">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="logo-mark">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+            <path d="M6 26A3 3 0 0 1 9 23H26V5H9A3 3 0 0 0 6 8V26Z" stroke="white" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round" opacity=".5" />
+            <path d="M6 26A3 3 0 0 1 9 23H26" stroke="white" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" opacity=".5" />
+            <path d="M16 9L17.5 14L22 15.5L17.5 17L16 22L14.5 17L10 15.5L14.5 14L16 9Z" fill="white" />
+            <circle cx="23" cy="10" r="1.2" fill="white" opacity=".6" />
+            <circle cx="11" cy="21" r="1" fill="white" opacity=".4" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">Read<em>ify</em></div>
+          <div class="brand-sub">Admin Dashboard</div>
+        </div>
+      </div>
+
+      <div class="sidebar-clock">
+        <div class="clock-time" id="sb-clock">--:--:--</div>
+        <div class="clock-date" id="sb-date">Loading…</div>
+      </div>
+
+      <div class="nav-section-lbl">Main</div>
+      <div class="nav-item active" onclick="goTo('dashboard',this)"><span class="nav-icon"><svg width="18" height="18"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="3" width="7" height="7" rx="1" />
+            <rect x="3" y="14" width="7" height="7" rx="1" />
+            <rect x="14" y="14" width="7" height="7" rx="1" />
+          </svg></span>Dashboard</div>
+      <div class="nav-item" onclick="goTo('users',this)"><span class="nav-icon"><svg width="18" height="18"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg></span>Users<span class="nav-badge" id="nb-u">—</span></div>
+      <div class="nav-item" onclick="goTo('books',this)"><span class="nav-icon"><svg width="18" height="18"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+          </svg></span>Books<span class="nav-badge" id="nb-b">—</span></div>
+
+      <div class="nav-section-lbl">Monitor</div>
+      <div class="nav-item" onclick="goTo('activities',this)"><span class="nav-icon"><svg width="18" height="18"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+          </svg></span>Activities</div>
+      <div class="nav-item" onclick="goTo('analytics',this)"><span class="nav-icon"><svg width="18" height="18"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+          </svg></span>Analytics</div>
+      <div class="nav-item" onclick="goTo('support',this)"><span class="nav-icon"><svg width="18" height="18"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+          </svg></span>Support Chat</div>
+
+      <div class="nav-section-lbl">Config</div>
+      <div class="nav-item" onclick="goTo('settings',this)"><span class="nav-icon"><svg width="18" height="18"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path
+              d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg></span>Settings</div>
+
+      <div class="sidebar-footer">
+        <div class="sa-avatar" id="sa-av">A</div>
+        <div class="sa-info">
+          <div class="sa-name" id="sa-name">Admin</div>
+          <div class="sa-role">● Super Admin</div>
+        </div>
+        <button class="sa-logout" onclick="logout()" title="Logout">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main-area">
+      <!-- TOPBAR -->
+      <!-- Mobile sidebar backdrop -->
+      <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="closeMobileSidebar()"></div>
+
+      <header class="topbar">
+        <button class="hamburger-btn" id="hamburger-btn" onclick="toggleMobileSidebar()" title="Toggle menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <div class="topbar-title" id="topbar-title">Dashboard</div>
+        <div class="topbar-clock-wrap">
+          <div class="tb-time" id="tb-clock">--:--:--</div>
+          <div class="tb-date" id="tb-date"></div>
+        </div>
+        <div class="topbar-spacer"></div>
+        <div class="search-wrap">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input type="text" id="global-search" placeholder="Search users, books…" oninput="handleSearch(this.value)">
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-btn" onclick="toggleNotif()" title="Notifications">
+            🔔<span class="notif-dot-badge show" id="notif-dot"></span>
+          </button>
+          <button class="icon-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">🌙</button>
+          <button class="icon-btn" title="Refresh" onclick="refreshData()">↻</button>
+        </div>
+      </header>
+
+      <!-- NOTIFICATION PANEL -->
+      <div class="notif-panel" id="notif-panel">
+        <div class="notif-hdr">
+          <h3>Notifications</h3>
+          <div style="display:flex;gap:12px;align-items:center"><span class="notif-mark-all"
+              onclick="clearAllNotifs()">Clear all</span><span class="notif-mark-all" onclick="markAllRead()">Mark all
+              read</span></div>
+        </div>
+        <div id="notif-list"></div>
+      </div>
+
+      <!-- CONTENT -->
+      <main class="content">
+
+        <!-- ─── DASHBOARD ─── -->
+        <section id="view-dashboard" class="view active">
+          <div class="view-header">
+            <div>
+              <h2>Dashboard Overview</h2>
+              <p class="view-sub"><span class="realtime-dot"></span>Live data · refreshes automatically</p>
+            </div>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-card sc-amber s1">
+              <div class="stat-icon-wrap">👥</div>
+              <div class="stat-val" id="sv-users">—</div>
+              <div class="stat-lbl">Total Users</div>
+              <span class="stat-trend trend-up">↑ +12% this month</span>
+            </div>
+            <div class="stat-card sc-green s2">
+              <div class="stat-icon-wrap">📖</div>
+              <div class="stat-val" id="sv-books">—</div>
+              <div class="stat-lbl">Total Books</div>
+              <span class="stat-trend trend-up">↑ +8% this month</span>
+            </div>
+            <div class="stat-card sc-cyan s3">
+              <div class="stat-icon-wrap">🛒</div>
+              <div class="stat-val" id="sv-orders">—</div>
+              <div class="stat-lbl">Total Orders</div>
+              <span class="stat-trend trend-up">↑ +5% this month</span>
+            </div>
+            <div class="stat-card sc-red s4">
+              <div class="stat-icon-wrap">💸</div>
+              <div class="stat-val" id="sv-refunds">—</div>
+              <div class="stat-lbl">Pending Refund Requests</div>
+              <span class="stat-trend trend-dn">Needs admin approval</span>
+            </div>
+          </div>
+
+          <div class="chart-row">
+            <div class="chart-card">
+              <div class="chart-hdr">
+                <div>
+                  <div class="chart-title">User Growth</div>
+                  <div class="chart-sub">New registrations over time</div>
+                </div>
+                <div class="chart-actions">
+                  <button class="chart-btn active" onclick="switchGrowthPeriod('7d',this)">7D</button>
+                  <button class="chart-btn" onclick="switchGrowthPeriod('1m',this)">1M</button>
+                  <button class="chart-btn" onclick="switchGrowthPeriod('6m',this)">6M</button>
+                </div>
+              </div>
+              <canvas id="c-growth"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-hdr">
+                <div>
+                  <div class="chart-title">Book Categories</div>
+                  <div class="chart-sub">Distribution by genre</div>
+                </div>
+              </div>
+              <canvas id="c-cats"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-row-2">
+            <div class="chart-card">
+              <div class="chart-hdr">
+                <div>
+                  <div class="chart-title">Top 5 Books</div>
+                  <div class="chart-sub">Most purchased this month</div>
+                </div>
+              </div>
+              <canvas id="c-top"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── USERS ─── -->
+        <section id="view-users" class="view">
+          <div class="view-header">
+            <div>
+              <h2>User Management</h2>
+              <p class="view-sub">Manage registered library members</p>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-export btn-sm" onclick="exportData('users')">
+                <svg class="export-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" />
+                </svg>
+                Export Excel
+              </button>
+            </div>
+          </div>
+          <div class="msg-bar" id="msg-users"></div>
+          <div class="chart-row-2" style="margin-bottom:18px">
+            <div class="chart-card">
+              <div class="chart-hdr">
+                <div>
+                  <div class="chart-title">Registration Trend</div>
+                  <div class="chart-sub">Monthly new users</div>
+                </div>
+              </div><canvas id="c-users-trend"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-hdr">
+                <div>
+                  <div class="chart-title">User Status</div>
+                  <div class="chart-sub">Active vs Inactive</div>
+                </div>
+              </div><canvas id="c-users-status"></canvas>
+            </div>
+          </div>
+          <div class="user-insight-grid" id="users-insights">
+            <div class="user-insight-card">
+              <div class="ui-label">Total Users</div>
+              <div class="ui-value">—</div>
+              <div class="ui-sub">All registered accounts</div>
+            </div>
+            <div class="user-insight-card">
+              <div class="ui-label">Active Users</div>
+              <div class="ui-value">—</div>
+              <div class="ui-sub">Enabled user accounts</div>
+            </div>
+            <div class="user-insight-card">
+              <div class="ui-label">Admins</div>
+              <div class="ui-value">—</div>
+              <div class="ui-sub">Accounts with admin role</div>
+            </div>
+            <div class="user-insight-card">
+              <div class="ui-label">New This Week</div>
+              <div class="ui-value">—</div>
+              <div class="ui-sub">Joined in last 7 days</div>
+            </div>
+          </div>
+          <div class="table-card">
+            <div class="tc-header">
+              <h3>All Users</h3>
+              <div class="tc-search"><span style="color:var(--text3)">🔍</span><input type="text"
+                  placeholder="Search users…" oninput="filterUsersTable(this.value)"></div>
+              <select class="btn btn-outline btn-sm" style="padding:7px 11px;cursor:pointer;outline:none"
+                onchange="filterUserStatus(this.value)">
+                <option value="all">All Status</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+              <select class="btn btn-outline btn-sm" style="padding:7px 11px;cursor:pointer;outline:none"
+                onchange="filterUserRole(this.value)">
+                <option value="all">All Roles</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+              </select>
+              <select class="btn btn-outline btn-sm" style="padding:7px 11px;cursor:pointer;outline:none"
+                onchange="sortUsersSection(this.value)">
+                <option value="recent">Recently Joined</option>
+                <option value="oldest">Oldest First</option>
+                <option value="name-az">Name A-Z</option>
+                <option value="name-za">Name Z-A</option>
+              </select>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name / Email</th>
+                    <th>Joined</th>
+                    <th>Books</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="users-tbody">
+                  <tr>
+                    <td colspan="6" style="text-align:center;padding:28px;color:var(--text2)">Loading from server…</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="tc-footer"><span id="users-count">—</span>
+              <div class="pagination" id="users-pg"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── BOOKS ─── -->
+        <section id="view-books" class="view">
+          <div class="view-header">
+            <div>
+              <h2>Book Catalog</h2>
+              <p class="view-sub">Manage digital and physical books</p>
+            </div>
+            <div class="header-actions">
+              <button class="btn btn-primary btn-sm" onclick="openAddBook()">＋ Add Book</button>
+              <button class="btn btn-export btn-sm" onclick="exportData('books')">
+                <svg class="export-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" />
+                </svg>
+                Export Excel
+              </button>
+            </div>
+          </div>
+          <div class="msg-bar" id="msg-books"></div>
+          <div class="chart-row-2" style="margin-bottom:18px">
+            <div class="chart-card">
+              <div class="chart-hdr">
+                <div>
+                  <div class="chart-title">Books Added Monthly</div>
+                  <div class="chart-sub">Catalog growth</div>
+                </div>
+              </div><canvas id="c-books-monthly"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-hdr">
+                <div>
+                  <div class="chart-title">Format Distribution</div>
+                  <div class="chart-sub">eBook · Physical · Audio</div>
+                </div>
+              </div><canvas id="c-formats"></canvas>
+            </div>
+          </div>
+          <div class="book-highlight-grid" id="books-highlights">
+            <div class="book-highlight-card loading">
+              <div class="bh-label">Recently Uploaded</div>
+              <div class="bh-title">Loading…</div>
+              <div class="bh-meta">Fetching latest books</div>
+            </div>
+            <div class="book-highlight-card loading">
+              <div class="bh-label">Most Purchased</div>
+              <div class="bh-title">Loading…</div>
+              <div class="bh-meta">Computing sales stats</div>
+            </div>
+            <div class="book-highlight-card loading">
+              <div class="bh-label">Top Rated</div>
+              <div class="bh-title">Loading…</div>
+              <div class="bh-meta">Checking ratings</div>
+            </div>
+          </div>
+          <div class="table-card">
+            <div class="tc-header">
+              <h3>All Books</h3>
+              <div class="tc-search"><span style="color:var(--text3)">🔍</span><input type="text"
+                  placeholder="Search books…" oninput="filterBooksTable(this.value)"></div>
+              <select class="btn btn-outline btn-sm" style="padding:7px 11px;cursor:pointer;outline:none"
+                onchange="filterBooksBySection(this.value)">
+                <option value="all">All Books</option>
+                <option value="in-stock">In Stock</option>
+                <option value="out-of-stock">Out of Stock</option>
+                <option value="recent">Recently Uploaded</option>
+                <option value="purchased">Most Purchased</option>
+                <option value="rated">Top Rated</option>
+                <option value="viewed">Most Viewed</option>
+                <option value="new-release">New Releases</option>
+                <option value="featured">Featured</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="price-low">Price: Low to High</option>
+              </select>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <colgroup>
+                  <col style="width:60px"> <!-- Cover -->
+                  <col style="width:11%"> <!-- ID -->
+                  <col style="width:25%"> <!-- Title -->
+                  <col style="width:17%"> <!-- Author -->
+                  <col style="width:15%"> <!-- Category -->
+                  <col style="width:10%"> <!-- Stock -->
+                  <col style="width:8%"> <!-- Price -->
+                  <col style="width:11%"> <!-- Actions -->
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>Cover</th>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th>Stock</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="books-tbody">
+                  <tr>
+                    <td colspan="8" style="text-align:center;padding:28px;color:var(--text2)">Loading from server…</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="tc-footer"><span id="books-count">—</span>
+              <div class="pagination" id="books-pg"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── ACTIVITIES ─── -->
+        <section id="view-activities" class="view">
+          <div class="view-header">
+            <div>
+              <h2>Activity Log</h2>
+              <p class="view-sub"><span class="realtime-dot"></span>Real-time events</p>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="exportData('activities')">📊 Export Log</button>
+          </div>
+          <div class="table-card" style="margin-bottom:18px">
+            <div class="tc-header">
+              <h3>Refund Requests (Pending)</h3>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Book</th>
+                    <th>Reason</th>
+                    <th>Refund Method</th>
+                    <th>Requested</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="refunds-tbody">
+                  <tr>
+                    <td colspan="6" style="text-align:center;padding:24px;color:var(--text2)">Loading…</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="chart-row-2" style="margin-bottom:18px">
+            <div class="chart-card">
+              <div class="chart-hdr">
+                <div>
+                  <div class="chart-title">Hourly Activity</div>
+                  <div class="chart-sub">Events per hour today</div>
+                </div>
+              </div><canvas id="c-hourly"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-hdr">
+                <div>
+                  <div class="chart-title">Event Types</div>
+                  <div class="chart-sub">Category breakdown</div>
+                </div>
+              </div><canvas id="c-events"></canvas>
+            </div>
+          </div>
+          <div class="table-card">
+            <div class="tc-header">
+              <h3>Recent Activities</h3>
+              <div class="tc-search"><span style="color:var(--text3)">🔍</span><input type="text"
+                  placeholder="Search activities…" oninput="filterActs(this.value)"></div>
+            </div>
+            <div id="act-list"></div>
+          </div>
+        </section>
+
+        <!-- ─── ANALYTICS ─── -->
+        <section id="view-analytics" class="view">
+          <div class="view-header">
+            <div>
+              <h2>Analytics</h2>
+              <p class="view-sub"><span class="realtime-dot"></span>Deep performance insights</p>
+            </div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-card">
+              <div class="metric-val" style="color:var(--accent)">94.2%</div>
+              <div class="metric-lbl">Read Completion Rate</div>
+              <div class="metric-bar-wrap">
+                <div class="metric-fill" style="width:94.2%;background:var(--accent)"></div>
+              </div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-val" style="color:var(--success)">87%</div>
+              <div class="metric-lbl">Active User Retention</div>
+              <div class="metric-bar-wrap">
+                <div class="metric-fill" style="width:87%;background:var(--success)"></div>
+              </div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-val" style="color:var(--cyan)">4.3</div>
+              <div class="metric-lbl">Avg Books / User</div>
+              <div class="metric-bar-wrap">
+                <div class="metric-fill" style="width:43%;background:var(--cyan)"></div>
+              </div>
+            </div>
+          </div>
+          <div class="chart-row-2">
+            <div class="chart-card">
+              <div class="chart-hdr">
+                <div>
+                  <div class="chart-title">Revenue</div>
+                  <div class="chart-sub">Monthly collection</div>
+                </div>
+              </div><canvas id="c-revenue"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-hdr">
+                <div>
+                  <div class="chart-title">Peak Usage Hours</div>
+                  <div class="chart-sub">Library activity by hour</div>
+                </div>
+              </div><canvas id="c-peak"></canvas>
+            </div>
+          </div>
+          <div class="chart-row-2" style="margin-top:16px">
+            <div class="chart-card">
+              <div class="chart-hdr">
+                <div>
+                  <div class="chart-title">Top 10 Books by Price</div>
+                  <div class="chart-sub">Highest priced books in catalog</div>
+                </div>
+              </div><canvas id="c-top-purchased"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-hdr">
+                <div>
+                  <div class="chart-title">Books by Category</div>
+                  <div class="chart-sub">Distribution across genres</div>
+                </div>
+              </div><canvas id="c-most-searched"></canvas>
+            </div>
+          </div>
+          <div class="chart-card" style="margin-top:16px">
+            <div class="chart-hdr">
+              <div>
+                <div class="chart-title">Daily New Users</div>
+                <div class="chart-sub">User registrations over last 7 days</div>
+              </div>
+            </div>
+            <canvas id="c-logins" style="max-height:180px"></canvas>
+          </div>
+          <div class="chart-card" style="margin-top:16px">
+            <div class="chart-hdr">
+              <div>
+                <div class="chart-title">Refund Analytics</div>
+                <div class="chart-sub">Pending: <span id="ra-pending">0</span> · Approved: <span
+                    id="ra-approved">0</span> · Rejected: <span id="ra-rejected">0</span></div>
+              </div>
+            </div>
+            <canvas id="c-refunds" style="max-height:220px"></canvas>
+          </div>
+        </section>
+
+        <!-- ─── SETTINGS ─── -->
+        <section id="view-settings" class="view">
+          <div class="view-header">
+            <div>
+              <h2>Settings</h2>
+              <p class="view-sub">Configure your admin preferences</p>
+            </div>
+          </div>
+          <div class="settings-grid">
+
+            <!-- Time Format -->
+            <div class="settings-card">
+              <div class="sc-header"><span class="sc-icon">🕐</span>
+                <h3>Time Format</h3>
+              </div>
+              <div class="sc-body">
+                <div style="font-size:.8rem;color:var(--text2);margin-bottom:6px">Current time preview:</div>
+                <div id="time-preview"
+                  style="font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:12px">
+                  --:--:--</div>
+                <div style="font-size:.8rem;color:var(--text2);margin-bottom:8px">Select format:</div>
+                <div class="time-opts">
+                  <div class="time-opt" onclick="setTimeFmt('utc',this)">UTC</div>
+                  <div class="time-opt active" onclick="setTimeFmt('12h',this)">12 hr</div>
+                  <div class="time-opt" onclick="setTimeFmt('24h',this)">24 hr</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Appearance -->
+            <div class="settings-card">
+              <div class="sc-header"><span class="sc-icon">🎨</span>
+                <h3>Appearance</h3>
+              </div>
+              <div class="sc-body">
+                <div style="font-size:.84rem;font-weight:500;margin-bottom:4px">Theme Mode</div>
+                <div style="font-size:.76rem;color:var(--text2);margin-bottom:2px">Switch between light and dark</div>
+                <div class="theme-picker">
+                  <div class="theme-opt" id="opt-light" onclick="applyTheme('light')">
+                    <div class="tp-icon">☀️</div>Light
+                  </div>
+                  <div class="theme-opt active" id="opt-dark" onclick="applyTheme('dark')">
+                    <div class="tp-icon">🌙</div>Dark
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notifications -->
+            <div class="settings-card">
+              <div class="sc-header"><span class="sc-icon">🔔</span>
+                <h3>Notifications</h3>
+              </div>
+              <div class="sc-body">
+                <div class="setting-row">
+                  <div>
+                    <div class="sr-label">New User Signup</div>
+                    <div class="sr-sub">Alert on registration</div>
+                  </div>
+                  <label class="toggle"><input type="checkbox" checked
+                      onchange="showToast('💾 Preferences saved','success')"><span class="toggle-slider"></span></label>
+                </div>
+                <div class="setting-row">
+                  <div>
+                    <div class="sr-label">Overdue Books</div>
+                    <div class="sr-sub">Daily overdue alerts</div>
+                  </div>
+                  <label class="toggle"><input type="checkbox" checked
+                      onchange="showToast('💾 Preferences saved','success')"><span class="toggle-slider"></span></label>
+                </div>
+                <div class="setting-row">
+                  <div>
+                    <div class="sr-label">New Book Added</div>
+                    <div class="sr-sub">Catalog update alerts</div>
+                  </div>
+                  <label class="toggle"><input type="checkbox"
+                      onchange="showToast('💾 Preferences saved','success')"><span class="toggle-slider"></span></label>
+                </div>
+                <div class="setting-row">
+                  <div>
+                    <div class="sr-label">System Alerts</div>
+                    <div class="sr-sub">Critical events</div>
+                  </div>
+                  <label class="toggle"><input type="checkbox" checked
+                      onchange="showToast('💾 Preferences saved','success')"><span class="toggle-slider"></span></label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Change Password -->
+            <div class="settings-card" style="border-color:rgba(239,68,68,.25)">
+              <div class="sc-header" style="border-color:rgba(239,68,68,.2)"><span class="sc-icon">🔒</span>
+                <h3>Change Password</h3>
+              </div>
+              <div class="sc-body">
+                <div class="pass-locked" id="pass-locked">
+                  <div class="lock-icon">🔐</div>
+                  <p>Verify you are not a robot to unlock password change</p>
+                  <button class="btn btn-outline btn-sm" style="border-color:rgba(239,68,68,.35);color:var(--danger)"
+                    onclick="showCaptcha()">🤖 Verify Identity</button>
+                </div>
+                <div class="captcha-area" id="captcha-area">
+                  <div class="captcha-box">
+                    <div class="captcha-hdr">🛡 Security Verification</div>
+                    <label class="captcha-chk-row">
+                      <input type="checkbox" id="captcha-chk" onchange="captchaChecked(this)">
+                      <span>I'm not a robot</span>
+                    </label>
+                    <div class="captcha-fine">reCAPTCHA · Privacy · Terms</div>
+                  </div>
+                </div>
+                <div class="pass-form-area" id="pass-form">
+                  <div class="verified-banner">✅ Identity verified — password change unlocked</div>
+                  <input type="password" class="pass-input" placeholder="Current password" id="p-cur">
+                  <input type="password" class="pass-input" placeholder="New password (min 8 chars)" id="p-new">
+                  <input type="password" class="pass-input" placeholder="Confirm new password" id="p-cfm">
+                  <button class="btn btn-primary" onclick="submitPasswordChange()">Update Password</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ─── SUPPORT CHAT ─── -->
+        <section id="view-support" class="view">
+          <div class="view-header">
+            <div>
+              <h2>Customer Support</h2>
+              <p class="view-sub"><span class="realtime-dot"></span>Emergency requests and live user support</p>
+            </div>
+            <div class="support-header-stats">
+              <div class="support-stat-pill">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                </svg>
+                <span>Live Chat</span>
+              </div>
+              <div class="support-stat-pill stat-pill-active">
+                <span class="realtime-dot" style="margin-right:2px"></span>
+                <span id="support-active-count">0</span> Active
+              </div>
+            </div>
+          </div>
+          <div class="support-layout">
+            <aside class="support-sidebar">
+              <div class="support-sidebar-hdr">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                  <line x1="12" y1="9" x2="12" y2="13" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                Emergency Requests
+              </div>
+              <div id="support-requests" class="support-requests"></div>
+              <div class="support-sidebar-empty" id="support-sidebar-empty">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" opacity=".3">
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                </svg>
+                <span>No pending requests</span>
+                <span class="support-empty-sub">New tickets will appear here</span>
+              </div>
+            </aside>
+            <div class="support-chat-main">
+              <div class="support-chat-top">
+                <div class="support-chat-top-left">
+                  <div class="support-chat-avatar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                      <circle cx="12" cy="7" r="4" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="support-chat-title" id="support-chat-title">No conversation selected</div>
+                    <div class="support-chat-sub" id="support-chat-sub">Pick a request to start chatting</div>
+                  </div>
+                </div>
+                <div class="support-chat-actions">
+                  <button class="btn btn-danger btn-sm support-delete-btn" onclick="deleteActiveSupportConversation()">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="3 6 5 6 21 6" />
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                    </svg>
+                    Delete
+                  </button>
+                  <div class="support-agent-pills" id="support-agent-pills">
+                    <button class="agent-pill" onclick="selectSupportAgent('Shivanand S')">Shivanand S</button>
+                    <button class="agent-pill" onclick="selectSupportAgent('M Sumukh')">M Sumukh</button>
+                    <button class="agent-pill" onclick="selectSupportAgent('Sohan N')">Sohan N</button>
+                    <button class="agent-pill" onclick="selectSupportAgent('TN Mahadev parasad')">TN Mahadev
+                      parasad</button>
+                  </div>
+                </div>
+              </div>
+              <div id="support-chat-feed" class="support-chat-feed">
+                <div class="support-welcome-state" id="support-welcome-state">
+                  <div class="support-welcome-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                    </svg>
+                  </div>
+                  <h3>Customer Support Center</h3>
+                  <p>Select a conversation from the sidebar or wait for new support requests to come in.</p>
+                  <div class="support-features-row">
+                    <div class="support-feature">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                      </svg>
+                      <span>Real-time</span>
+                    </div>
+                    <div class="support-feature">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M12 14a3 3 0 003-3V6a3 3 0 10-6 0v5a3 3 0 003 3z" />
+                        <path
+                          d="M17 11a1 1 0 112 0 7 7 0 01-6 6.93V20h2a1 1 0 110 2H9a1 1 0 110-2h2v-2.07A7 7 0 015 11a1 1 0 112 0 5 5 0 0010 0z" />
+                      </svg>
+                      <span>Voice</span>
+                    </div>
+                    <div class="support-feature">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      </svg>
+                      <span>Secure</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="support-chat-input-row">
+                <button class="btn btn-outline support-voice-toggle" id="support-voice-btn"
+                  onclick="toggleSupportVoiceRecording()">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16">
+                    <path
+                      d="M12 14a3 3 0 003-3V6a3 3 0 10-6 0v5a3 3 0 003 3zm5-3a1 1 0 112 0 7 7 0 01-6 6.93V20h2a1 1 0 110 2H9a1 1 0 110-2h2v-2.07A7 7 0 015 11a1 1 0 112 0 5 5 0 0010 0z" />
+                  </svg>
+                  <span>Voice</span>
+                </button>
+                <textarea id="support-chat-input" placeholder="Type your message to user..." rows="2"></textarea>
+                <button class="btn btn-primary support-send-btn" onclick="sendSupportMessage()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                  </svg>
+                  Send
+                </button>
+              </div>
+              <div class="support-voice-hint" id="support-voice-hint"></div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div><!-- /main-area -->
+
+  </div><!-- /adminSection -->
+
+  <!-- ADD BOOK MODAL -->
+  <div class="modal-overlay" id="add-book-modal" onclick="closeAddBook(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-hdr">
+        <h3>📚 Add New Book</h3>
+        <button class="modal-close" onclick="closeAddBook()">✕</button>
+      </div>
+      <div class="msg-bar" id="msg-add-book"></div>
+      <form id="add-book-form" onsubmit="submitAddBook(event)" enctype="multipart/form-data">
+        <div class="modal-grid">
+          <div class="form-group">
+            <label>Title <span class="req">*</span></label>
+            <input type="text" name="title" placeholder="Book title" required>
+          </div>
+          <div class="form-group">
+            <label>Author <span class="req">*</span></label>
+            <input type="text" name="author" placeholder="Author name" required>
+          </div>
+          <div class="form-group">
+            <label>Category <span class="req">*</span></label>
+            <select name="category" id="ab-category" required>
+              <option value="">Loading categories…</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Price (₹)</label>
+            <input type="number" name="price" placeholder="0" min="0">
+          </div>
+          <div class="form-group">
+            <label>Language</label>
+            <input type="text" name="language" placeholder="English">
+          </div>
+          <div class="form-group">
+            <label>Pages</label>
+            <input type="number" name="pages" placeholder="250" min="1">
+          </div>
+          <div class="form-group">
+            <label>Publish Year</label>
+            <input type="number" name="publishYear" placeholder="2024">
+          </div>
+          <div class="form-group">
+            <label>Stock Status</label>
+            <select name="inStock" id="ab-in-stock">
+              <option value="true" selected>In Stock</option>
+              <option value="false">Out of Stock</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>PDF File <span class="req">*</span></label>
+            <input type="file" name="pdfFile" id="ab-pdf-file" accept=".pdf,application/pdf" required>
+            <small style="color:var(--text2);font-size:.72rem;margin-top:4px;display:block">Upload the book PDF (max 50
+              MB)</small>
+          </div>
+          <div class="form-group form-group-full">
+            <label>Cover Image <span style="color:var(--text2);font-size:.75rem">(upload file or paste URL
+                below)</span></label>
+            <input type="file" name="coverImage" id="ab-cover-file" accept="image/*" onchange="previewCover(this)">
+            <input type="text" name="coverUrl" id="ab-cover-url" placeholder="Or paste image URL…"
+              style="margin-top:6px">
+            <img id="ab-cover-preview" src="" alt=""
+              style="display:none;margin-top:8px;height:80px;border-radius:4px;object-fit:cover">
+          </div>
+          <div class="form-group form-group-full">
+            <label>Description</label>
+            <textarea name="description" placeholder="Short description…" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeAddBook()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="ab-submit-btn">Add Book</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- EDIT BOOK MODAL -->
+  <div class="modal-overlay" id="edit-book-modal" onclick="closeEditBook(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-hdr modal-hdr-edit">
+        <h3>✏️ Edit Book</h3>
+        <button class="modal-close" onclick="closeEditBook()">✕</button>
+      </div>
+      <div class="msg-bar" id="msg-edit-book"></div>
+      <form id="edit-book-form" onsubmit="submitEditBook(event)" enctype="multipart/form-data">
+        <input type="hidden" name="bookId" id="eb-book-id">
+        <div class="modal-grid">
+          <div class="form-group">
+            <label>Title <span class="req">*</span></label>
+            <input type="text" name="title" id="eb-title" placeholder="Book title" required>
+          </div>
+          <div class="form-group">
+            <label>Author <span class="req">*</span></label>
+            <input type="text" name="author" id="eb-author" placeholder="Author name" required>
+          </div>
+          <div class="form-group">
+            <label>Category <span class="req">*</span></label>
+            <select name="category" id="eb-category" required>
+              <option value="">Loading categories...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Price (₹)</label>
+            <input type="number" name="price" id="eb-price" placeholder="0" min="0">
+          </div>
+          <div class="form-group">
+            <label>Language</label>
+            <input type="text" name="language" id="eb-language" placeholder="English">
+          </div>
+          <div class="form-group">
+            <label>Pages</label>
+            <input type="number" name="pages" id="eb-pages" placeholder="250" min="1">
+          </div>
+          <div class="form-group">
+            <label>Publish Year</label>
+            <input type="number" name="publishYear" id="eb-publish-year" placeholder="2024">
+          </div>
+          <div class="form-group">
+            <label>Stock Status</label>
+            <select name="inStock" id="eb-in-stock">
+              <option value="true">In Stock</option>
+              <option value="false">Out of Stock</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Replace PDF File</label>
+            <input type="file" name="pdfFile" id="eb-pdf-file" accept=".pdf,application/pdf">
+            <small class="edit-helper">Leave empty to keep current PDF (max 50 MB)</small>
+            <small class="edit-helper" id="eb-current-pdf">Current: —</small>
+          </div>
+          <div class="form-group form-group-full">
+            <label>Cover Image <span style="color:var(--text2);font-size:.75rem">(upload file or paste URL
+                below)</span></label>
+            <input type="file" name="coverImage" id="eb-cover-file" accept="image/*" onchange="previewEditCover(this)">
+            <input type="text" name="coverUrl" id="eb-cover-url" placeholder="Or paste image URL..."
+              style="margin-top:6px">
+            <img id="eb-cover-preview" src="" alt=""
+              style="display:none;margin-top:8px;height:100px;border-radius:6px;object-fit:cover">
+          </div>
+          <div class="form-group form-group-full">
+            <label>Description</label>
+            <textarea name="description" id="eb-description" placeholder="Short description..." rows="3"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeEditBook()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="eb-submit-btn">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toasts"></div>
+
+  <script src="admin.js"></script>
+</body>
+
+</html>

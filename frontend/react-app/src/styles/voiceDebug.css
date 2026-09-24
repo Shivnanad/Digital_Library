@@ -1,0 +1,96 @@
+/* Voice Debug Panel */
+.voice-debug {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9998;
+  background: rgba(20, 25, 50, 0.95);
+  border: 2px solid rgba(139, 92, 246, 0.5);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  backdrop-filter: blur(8px);
+  max-width: 300px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.debug-header {
+  font-weight: 700;
+  color: rgba(139, 92, 246, 1);
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.debug-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 4px 0;
+  padding: 4px 0;
+}
+
+.debug-row.error {
+  color: #ef4444;
+}
+
+.debug-label {
+  color: rgba(139, 92, 246, 0.8);
+  font-weight: 600;
+  width: 100px;
+  flex-shrink: 0;
+}
+
+.debug-value {
+  color: rgba(255, 255, 255, 0.9);
+  flex: 1;
+  word-break: break-word;
+  max-height: 40px;
+  overflow-y: auto;
+}
+
+.debug-value.active {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.debug-value.inactive {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Scrollbar styling for debug values */
+.debug-value::-webkit-scrollbar {
+  width: 4px;
+}
+
+.debug-value::-webkit-scrollbar-track {
+  background: rgba(100, 100, 100, 0.1);
+  border-radius: 2px;
+}
+
+.debug-value::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.4);
+  border-radius: 2px;
+}
+
+.debug-value::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.6);
+}
+
+@media (max-width: 640px) {
+  .voice-debug {
+    right: 12px;
+    bottom: 12px;
+    max-width: 250px;
+    font-size: 11px;
+    padding: 10px 12px;
+  }
+
+  .debug-label {
+    width: 80px;
+  }
+}

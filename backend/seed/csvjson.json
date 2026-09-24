@@ -1,0 +1,810 @@
+[
+  {
+    "title": "Think and Grow Rich",
+    "author": "Napoleon Hill",
+    "category": "",
+    "price": 320,
+    "description": "Motivation",
+    "pdffile": "thinkgrowrich.pdf"
+  },
+  {
+    "title": "The 7 Habits of Highly Effective People",
+    "author": "Stephen R. Covey",
+    "category": "",
+    "price": 396,
+    "description": "Motivation",
+    "pdffile": "7habits.pdf"
+  },
+  {
+    "title": "How to Win Friends and Influence People",
+    "author": "Dale Carnegie",
+    "category": "",
+    "price": 446,
+    "description": "Motivation",
+    "pdffile": "winfriends.pdf"
+  },
+  {
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "category": "",
+    "price": 284,
+    "description": "Motivation",
+    "pdffile": "atomichabits.pdf"
+  },
+  {
+    "title": "Rich Dad Poor Dad",
+    "author": "Robert T. Kiyosaki",
+    "category": "",
+    "price": 188,
+    "description": "Motivation",
+    "pdffile": "richdadpoordad.pdf"
+  },
+  {
+    "title": "The Power of Now",
+    "author": "Eckhart Tolle",
+    "category": "",
+    "price": 383,
+    "description": "Motivation",
+    "pdffile": "powerofnow.pdf"
+  },
+  {
+    "title": "Man�s Search for Meaning",
+    "author": "Viktor E. Frankl",
+    "category": "",
+    "price": 471,
+    "description": "Motivation",
+    "pdffile": "searchmeaning.pdf"
+  },
+  {
+    "title": "The Subtle Art of Not Giving a F*ck",
+    "author": "Mark Manson",
+    "category": "",
+    "price": 173,
+    "description": "Motivation",
+    "pdffile": "subtleart.pdf"
+  },
+  {
+    "title": "Deep Work",
+    "author": "Cal Newport",
+    "category": "",
+    "price": 352,
+    "description": "Motivation",
+    "pdffile": "deepwork.pdf"
+  },
+  {
+    "title": "Start With Why",
+    "author": "Simon Sinek",
+    "category": "",
+    "price": 171,
+    "description": "Motivation",
+    "pdffile": "startwhy.pdf"
+  },
+  {
+    "title": "The Psychology of Money",
+    "author": "Morgan Housel",
+    "category": "",
+    "price": 166,
+    "description": "Motivation",
+    "pdffile": "psychologymoney.pdf"
+  },
+  {
+    "title": "Can�t Hurt Me",
+    "author": "David Goggins",
+    "category": "",
+    "price": 248,
+    "description": "Motivation",
+    "pdffile": "canthurtme.pdf"
+  },
+  {
+    "title": "The Alchemist",
+    "author": "Paulo Coelho",
+    "category": "",
+    "price": 256,
+    "description": "Motivation",
+    "pdffile": "alchemist.pdf"
+  },
+  {
+    "title": "Ikigai",
+    "author": "H�ctor Garc�a and Francesc Miralles",
+    "category": "",
+    "price": 339,
+    "description": "Motivation",
+    "pdffile": "ikigai.pdf"
+  },
+  {
+    "title": "Grit",
+    "author": "Angela Duckworth",
+    "category": "",
+    "price": 289,
+    "description": "Motivation",
+    "pdffile": "grit.pdf"
+  },
+  {
+    "title": "Mindset",
+    "author": "Carol S. Dweck",
+    "category": "",
+    "price": 272,
+    "description": "Motivation",
+    "pdffile": "mindset.pdf"
+  },
+  {
+    "title": "Awaken the Giant Within",
+    "author": "Tony Robbins",
+    "category": "",
+    "price": 422,
+    "description": "Motivation",
+    "pdffile": "awakengiant.pdf"
+  },
+  {
+    "title": "The Four Agreements",
+    "author": "Don Miguel Ruiz",
+    "category": "",
+    "price": 191,
+    "description": "Motivation",
+    "pdffile": "fouragreements.pdf"
+  },
+  {
+    "title": "Meditations",
+    "author": "Marcus Aurelius",
+    "category": "",
+    "price": 302,
+    "description": "Motivation",
+    "pdffile": "meditations.pdf"
+  },
+  {
+    "title": "The Art of War",
+    "author": "Sun Tzu",
+    "category": "",
+    "price": 318,
+    "description": "Motivation",
+    "pdffile": "artofwar.pdf"
+  },
+  {
+    "title": "The 48 Laws of Power",
+    "author": "Robert Greene",
+    "category": "",
+    "price": 233,
+    "description": "Focus & Productivity",
+    "pdffile": "48laws.pdf"
+  },
+  {
+    "title": "The Power of Habit",
+    "author": "Charles Duhigg",
+    "category": "",
+    "price": 456,
+    "description": "Focus & Productivity",
+    "pdffile": "powerhabit.pdf"
+  },
+  {
+    "title": "Think Like a Monk",
+    "author": "Jay Shetty",
+    "category": "",
+    "price": 476,
+    "description": "Focus & Productivity",
+    "pdffile": "thinkmonk.pdf"
+  },
+  {
+    "title": "Ego Is the Enemy",
+    "author": "Ryan Holiday",
+    "category": "",
+    "price": 475,
+    "description": "Focus & Productivity",
+    "pdffile": "egoenemy.pdf"
+  },
+  {
+    "title": "Do Epic Shit",
+    "author": "Ankur Warikoo",
+    "category": "",
+    "price": 495,
+    "description": "Focus & Productivity",
+    "pdffile": "doepicshit.pdf"
+  },
+  {
+    "title": "Who Will Cry When You Die",
+    "author": "Robin Sharma",
+    "category": "",
+    "price": 341,
+    "description": "Focus & Productivity",
+    "pdffile": "whowillcry.pdf"
+  },
+  {
+    "title": "The Monk Who Sold His Ferrari",
+    "author": "Robin Sharma",
+    "category": "",
+    "price": 210,
+    "description": "Focus & Productivity",
+    "pdffile": "monkferrari.pdf"
+  },
+  {
+    "title": "The Intelligent Investor",
+    "author": "Benjamin Graham",
+    "category": "",
+    "price": 439,
+    "description": "Focus & Productivity",
+    "pdffile": "intelligentinvestor.pdf"
+  },
+  {
+    "title": "Zero to One",
+    "author": "Peter Thiel",
+    "category": "",
+    "price": 430,
+    "description": "Focus & Productivity",
+    "pdffile": "zerotoone.pdf"
+  },
+  {
+    "title": "Outliers",
+    "author": "Malcolm Gladwell",
+    "category": "",
+    "price": 131,
+    "description": "Focus & Productivity",
+    "pdffile": "outliers.pdf"
+  },
+  {
+    "title": "Sapiens",
+    "author": "Yuval Noah Harari",
+    "category": "",
+    "price": 379,
+    "description": "Focus & Productivity",
+    "pdffile": "sapiens.pdf"
+  },
+  {
+    "title": "Homo Deus",
+    "author": "Yuval Noah Harari",
+    "category": "",
+    "price": 314,
+    "description": "Focus & Productivity",
+    "pdffile": "homodeus.pdf"
+  },
+  {
+    "title": "The Courage to Be Disliked",
+    "author": "Ichiro Kishimi and Fumitake Koga",
+    "category": "",
+    "price": 119,
+    "description": "Focus & Productivity",
+    "pdffile": "courage.pdf"
+  },
+  {
+    "title": "The Compound Effect",
+    "author": "Darren Hardy",
+    "category": "",
+    "price": 252,
+    "description": "Focus & Productivity",
+    "pdffile": "compoundeffect.pdf"
+  },
+  {
+    "title": "Rework",
+    "author": "Jason Fried and David Heinemeier Hansson",
+    "category": "",
+    "price": 342,
+    "description": "Focus & Productivity",
+    "pdffile": "rework.pdf"
+  },
+  {
+    "title": "Make Your Bed",
+    "author": "William H. McRaven",
+    "category": "",
+    "price": 264,
+    "description": "Focus & Productivity",
+    "pdffile": "makeyourbed.pdf"
+  },
+  {
+    "title": "As a Man Thinketh",
+    "author": "James Allen",
+    "category": "",
+    "price": 308,
+    "description": "Focus & Productivity",
+    "pdffile": "asamanthinketh.pdf"
+  },
+  {
+    "title": "The Secret",
+    "author": "Rhonda Byrne",
+    "category": "",
+    "price": 152,
+    "description": "Focus & Productivity",
+    "pdffile": "thesecret.pdf"
+  },
+  {
+    "title": "Limitless",
+    "author": "Jim Kwik",
+    "category": "",
+    "price": 370,
+    "description": "Focus & Productivity",
+    "pdffile": "limitless.pdf"
+  },
+  {
+    "title": "Tools of Titans",
+    "author": "Timothy Ferriss",
+    "category": "",
+    "price": 339,
+    "description": "Focus & Productivity",
+    "pdffile": "toolsoftitans.pdf"
+  },
+  {
+    "title": "The One Thing",
+    "author": "Gary Keller and Jay Papasan",
+    "category": "",
+    "price": 274,
+    "description": "Self Improvement",
+    "pdffile": "onething.pdf"
+  },
+  {
+    "title": "Drive",
+    "author": "Daniel H. Pink",
+    "category": "",
+    "price": 317,
+    "description": "Self Improvement",
+    "pdffile": "drive.pdf"
+  },
+  {
+    "title": "Steal Like an Artist",
+    "author": "Austin Kleon",
+    "category": "",
+    "price": 297,
+    "description": "Self Improvement",
+    "pdffile": "steallikeartist.pdf"
+  },
+  {
+    "title": "The Richest Man in Babylon",
+    "author": "George S. Clason",
+    "category": "",
+    "price": 175,
+    "description": "Self Improvement",
+    "pdffile": "richestman.pdf"
+  },
+  {
+    "title": "A Brief History of Time",
+    "author": "Stephen Hawking",
+    "category": "",
+    "price": 459,
+    "description": "Self Improvement",
+    "pdffile": "briefhistory.pdf"
+  },
+  {
+    "title": "Educated",
+    "author": "Tara Westover",
+    "category": "",
+    "price": 489,
+    "description": "Self Improvement",
+    "pdffile": "educated.pdf"
+  },
+  {
+    "title": "The Magic of Thinking Big",
+    "author": "David J. Schwartz",
+    "category": "",
+    "price": 292,
+    "description": "Self Improvement",
+    "pdffile": "thinkingbig.pdf"
+  },
+  {
+    "title": "The Alchemist�s Companion",
+    "author": "Paulo Coelho",
+    "category": "",
+    "price": 276,
+    "description": "Self Improvement",
+    "pdffile": "alchemistcompanion.pdf"
+  },
+  {
+    "title": "Start Now Get Perfect Later",
+    "author": "Darius Foroux",
+    "category": "",
+    "price": 183,
+    "description": "Self Improvement",
+    "pdffile": "startnow.pdf"
+  },
+  {
+    "title": "Life�s Amazing Secrets",
+    "author": "Gaur Gopal Das",
+    "category": "",
+    "price": 162,
+    "description": "Self Improvement",
+    "pdffile": "lifesecrets.pdf"
+  },
+  {
+    "title": "You Can Win",
+    "author": "Shiv Khera",
+    "category": "",
+    "price": 106,
+    "description": "Self Improvement",
+    "pdffile": "youcanwin.pdf"
+  },
+  {
+    "title": "The Power of Positive Thinking",
+    "author": "Norman Vincent Peale",
+    "category": "",
+    "price": 106,
+    "description": "Self Improvement",
+    "pdffile": "positivethinking.pdf"
+  },
+  {
+    "title": "The Mountain Is You",
+    "author": "Brianna Wiest",
+    "category": "",
+    "price": 365,
+    "description": "Self Improvement",
+    "pdffile": "mountain.pdf"
+  },
+  {
+    "title": "Think Straight",
+    "author": "Darius Foroux",
+    "category": "",
+    "price": 117,
+    "description": "Self Improvement",
+    "pdffile": "thinkstraight.pdf"
+  },
+  {
+    "title": "Atomic Focus",
+    "author": "Cal Newport",
+    "category": "",
+    "price": 350,
+    "description": "Self Improvement",
+    "pdffile": "atomicfocus.pdf"
+  },
+  {
+    "title": "Psychology of Success",
+    "author": "Napoleon Hill",
+    "category": "",
+    "price": 158,
+    "description": "Self Improvement",
+    "pdffile": "successpsychology.pdf"
+  },
+  {
+    "title": "The Law of Attraction",
+    "author": "Rhonda Byrne",
+    "category": "",
+    "price": 337,
+    "description": "Self Improvement",
+    "pdffile": "lawofattraction.pdf"
+  },
+  {
+    "title": "Unfuck Yourself",
+    "author": "Gary John Bishop",
+    "category": "",
+    "price": 278,
+    "description": "Self Improvement",
+    "pdffile": "unfuckyourself.pdf"
+  },
+  {
+    "title": "The Comfort Crisis",
+    "author": "Michael Easter",
+    "category": "",
+    "price": 175,
+    "description": "Self Improvement",
+    "pdffile": "comfortcrisis.pdf"
+  },
+  {
+    "title": "The Obstacle Is the Way",
+    "author": "Ryan Holiday",
+    "category": "",
+    "price": 134,
+    "description": "Self Improvement",
+    "pdffile": "obstacle.pdf"
+  },
+  {
+    "title": "Stillness Is the Key",
+    "author": "Ryan Holiday",
+    "category": "",
+    "price": 174,
+    "description": "Space & Tech",
+    "pdffile": "stillness.pdf"
+  },
+  {
+    "title": "Essentialism",
+    "author": "Greg McKeown",
+    "category": "",
+    "price": 396,
+    "description": "Space & Tech",
+    "pdffile": "essentialism.pdf"
+  },
+  {
+    "title": "The Miracle Morning",
+    "author": "Hal Elrod",
+    "category": "",
+    "price": 284,
+    "description": "Space & Tech",
+    "pdffile": "miraclemorning.pdf"
+  },
+  {
+    "title": "Eat That Frog",
+    "author": "Brian Tracy",
+    "category": "",
+    "price": 368,
+    "description": "Space & Tech",
+    "pdffile": "eatthatfrog.pdf"
+  },
+  {
+    "title": "The Success Principles",
+    "author": "Jack Canfield",
+    "category": "",
+    "price": 236,
+    "description": "Space & Tech",
+    "pdffile": "successprinciples.pdf"
+  },
+  {
+    "title": "The Art of Thinking Clearly",
+    "author": "Rolf Dobelli",
+    "category": "",
+    "price": 379,
+    "description": "Space & Tech",
+    "pdffile": "thinkingclearly.pdf"
+  },
+  {
+    "title": "The Courage to Be Happy",
+    "author": "Ichiro Kishimi and Fumitake Koga",
+    "category": "",
+    "price": 183,
+    "description": "Space & Tech",
+    "pdffile": "couragehappy.pdf"
+  },
+  {
+    "title": "Flow",
+    "author": "Mihaly Csikszentmihalyi",
+    "category": "",
+    "price": 304,
+    "description": "Space & Tech",
+    "pdffile": "flow.pdf"
+  },
+  {
+    "title": "Mastery",
+    "author": "Robert Greene",
+    "category": "",
+    "price": 273,
+    "description": "Space & Tech",
+    "pdffile": "mastery.pdf"
+  },
+  {
+    "title": "The Almanack of Naval Ravikant",
+    "author": "Eric Jorgenson",
+    "category": "",
+    "price": 486,
+    "description": "Space & Tech",
+    "pdffile": "navalmanack.pdf"
+  },
+  {
+    "title": "The Personal MBA",
+    "author": "Josh Kaufman",
+    "category": "",
+    "price": 334,
+    "description": "Space & Tech",
+    "pdffile": "personalmba.pdf"
+  },
+  {
+    "title": "Think Faster Talk Smarter",
+    "author": "Matt Abrahams",
+    "category": "",
+    "price": 457,
+    "description": "Space & Tech",
+    "pdffile": "thinkfaster.pdf"
+  },
+  {
+    "title": "The Happiness Advantage",
+    "author": "Shawn Achor",
+    "category": "",
+    "price": 477,
+    "description": "Space & Tech",
+    "pdffile": "happinessadvantage.pdf"
+  },
+  {
+    "title": "The Daily Stoic",
+    "author": "Ryan Holiday",
+    "category": "",
+    "price": 311,
+    "description": "Space & Tech",
+    "pdffile": "dailystoic.pdf"
+  },
+  {
+    "title": "Mindset Secrets for Winning",
+    "author": "Mark Minervini",
+    "category": "",
+    "price": 240,
+    "description": "Space & Tech",
+    "pdffile": "mindsetsecrets.pdf"
+  },
+  {
+    "title": "The 5 AM Club",
+    "author": "Robin Sharma",
+    "category": "",
+    "price": 467,
+    "description": "Space & Tech",
+    "pdffile": "5amclub.pdf"
+  },
+  {
+    "title": "Life Is What You Make It",
+    "author": "Preeti Shenoy",
+    "category": "",
+    "price": 323,
+    "description": "Space & Tech",
+    "pdffile": "lifeiswhat.pdf"
+  },
+  {
+    "title": "Rewire Your Brain",
+    "author": "John B. Arden",
+    "category": "",
+    "price": 395,
+    "description": "Space & Tech",
+    "pdffile": "rewirebrain.pdf"
+  },
+  {
+    "title": "The Book of Joy",
+    "author": "Dalai Lama and Desmond Tutu",
+    "category": "",
+    "price": 197,
+    "description": "Space & Tech",
+    "pdffile": "bookofjoy.pdf"
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  },
+  {
+    "title": "",
+    "author": "",
+    "category": "",
+    "price": "",
+    "description": "",
+    "pdffile": ""
+  }
+]

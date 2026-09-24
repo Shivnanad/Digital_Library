@@ -1,0 +1,208 @@
+/* ══════════════════════════════════════════════════════
+   COVER PAGE — BOOK DETAIL ENTRANCE
+   ══════════════════════════════════════════════════════ */
+
+.cover-page {
+  position: relative;
+  min-height: calc(100vh - 68px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  background: transparent;
+  color: var(--fg);
+  overflow: hidden;
+}
+
+/* Blurred bg image */
+.cover-backdrop {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(36px) saturate(120%);
+  opacity: 0.2;
+  transform: scale(1.08);
+  z-index: 0;
+  transition: opacity 0.6s ease;
+}
+
+body[data-theme="light"] .cover-backdrop { opacity: 0.14; }
+
+/* Gradient vignette over backdrop */
+.cover-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, var(--bg) 100%),
+    linear-gradient(180deg, color-mix(in oklab, var(--bg) 40%, transparent) 0%, transparent 50%, color-mix(in oklab, var(--bg) 60%, transparent) 100%);
+  pointer-events: none;
+}
+
+/* ── Main card ──────────────────────────────────────── */
+.cover-card {
+  position: relative;
+  z-index: 2;
+  width: 960px;
+  max-width: calc(100% - 48px);
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow:
+    var(--dark-shadow-lg),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(24px) saturate(130%);
+  animation: coverCardAppear 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Top shimmer border */
+.cover-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    color-mix(in oklab, var(--accent) 40%, transparent) 40%,
+    color-mix(in oklab, var(--accent-2) 50%, transparent) 70%,
+    transparent);
+  border-radius: 99px;
+}
+
+@keyframes coverCardAppear {
+  from { opacity: 0; transform: translateY(30px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Book image ─────────────────────────────────────── */
+.cover-image {
+  width: 320px;
+  height: 460px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease;
+  transform: perspective(800px) rotateY(-4deg);
+}
+.cover-image:hover {
+  transform: perspective(800px) rotateY(0deg) scale(1.02);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* ── Info panel ─────────────────────────────────────── */
+.cover-info { flex: 1; min-width: 0; }
+
+.cover-title {
+  font-family: 'Cinzel', serif;
+  font-size: 32px;
+  font-weight: 900;
+  margin: 0 0 10px 0;
+  color: var(--heading);
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+  animation: coverInfoSlide 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.cover-author {
+  font-family: 'Outfit', sans-serif;
+  margin: 0 0 20px 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: coverInfoSlide 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+}
+
+@keyframes coverInfoSlide {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Buttons ────────────────────────────────────────── */
+.cover-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  animation: coverInfoSlide 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: var(--accent-contrast);
+  box-shadow: 0 6px 20px color-mix(in oklab, var(--accent) 35%, transparent);
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  transition: left 0.5s ease;
+}
+.btn-primary:hover::before { left: 150%; }
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px color-mix(in oklab, var(--accent) 50%, transparent);
+}
+
+.btn-outline {
+  background: color-mix(in oklab, var(--fg) 5%, transparent);
+  color: var(--fg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(8px);
+}
+.btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+  transform: translateY(-2px);
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 900px) {
+  .cover-card {
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 20px;
+    gap: 24px;
+  }
+  .cover-image {
+    width: 60%;
+    height: auto;
+    max-height: 56vh;
+    transform: none;
+  }
+  .cover-image:hover { transform: scale(1.02); }
+  .cover-title { font-size: 24px; text-align: center; }
+  .cover-author { text-align: center; }
+  .cover-actions { justify-content: center; }
+}

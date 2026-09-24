@@ -1,0 +1,804 @@
+/* ═══════════════════════════════════════════════════
+   READIFY AI VOICE ASSISTANT
+   Floating AI logo (like Amazon Rufus) + awake orb
+   + Gemini-style neon RGB page border on wake
+   ═══════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════
+   NEON RGB PAGE BORDER — "Hey Readify" Effect
+   Animated glowing border around viewport
+   ══════════════════════════════════════════ */
+.readify-neon-border {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.readify-neon-border.active {
+  opacity: 1;
+}
+
+/* Top edge */
+.neon-edge-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    #f59e0b 10%,
+    #ef4444 25%,
+    #a855f7 40%,
+    #3b82f6 55%,
+    #06b6d4 70%,
+    #22c55e 85%,
+    #f59e0b 95%,
+    transparent 100%
+  );
+  background-size: 300% 100%;
+  animation: neonFlowH 2s linear infinite;
+  box-shadow:
+    0 0 8px rgba(245, 158, 11, 0.5),
+    0 0 20px rgba(168, 85, 247, 0.3),
+    0 0 40px rgba(59, 130, 246, 0.2);
+  filter: blur(0.3px);
+}
+
+/* Bottom edge */
+.neon-edge-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    #22c55e 10%,
+    #06b6d4 25%,
+    #3b82f6 40%,
+    #a855f7 55%,
+    #ef4444 70%,
+    #f59e0b 85%,
+    #22c55e 95%,
+    transparent 100%
+  );
+  background-size: 300% 100%;
+  animation: neonFlowHReverse 2s linear infinite;
+  box-shadow:
+    0 0 8px rgba(34, 197, 94, 0.5),
+    0 0 20px rgba(59, 130, 246, 0.3),
+    0 0 40px rgba(168, 85, 247, 0.2);
+  filter: blur(0.3px);
+}
+
+/* Left edge */
+.neon-edge-left {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    #f59e0b 10%,
+    #ef4444 25%,
+    #a855f7 40%,
+    #3b82f6 55%,
+    #06b6d4 70%,
+    #22c55e 85%,
+    #f59e0b 95%,
+    transparent 100%
+  );
+  background-size: 100% 300%;
+  animation: neonFlowV 2s linear infinite;
+  box-shadow:
+    0 0 8px rgba(245, 158, 11, 0.5),
+    0 0 20px rgba(168, 85, 247, 0.3),
+    0 0 40px rgba(59, 130, 246, 0.2);
+  filter: blur(0.3px);
+}
+
+/* Right edge */
+.neon-edge-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 3px;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    #22c55e 10%,
+    #06b6d4 25%,
+    #3b82f6 40%,
+    #a855f7 55%,
+    #ef4444 70%,
+    #f59e0b 85%,
+    #22c55e 95%,
+    transparent 100%
+  );
+  background-size: 100% 300%;
+  animation: neonFlowVReverse 2s linear infinite;
+  box-shadow:
+    0 0 8px rgba(34, 197, 94, 0.5),
+    0 0 20px rgba(59, 130, 246, 0.3),
+    0 0 40px rgba(168, 85, 247, 0.2);
+  filter: blur(0.3px);
+}
+
+/* Corner glow flares */
+.neon-corner {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  filter: blur(6px);
+  animation: cornerPulse 1.5s ease-in-out infinite;
+}
+
+.neon-corner-tl {
+  top: -4px;
+  left: -4px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.8), transparent 70%);
+}
+
+.neon-corner-tr {
+  top: -4px;
+  right: -4px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.8), transparent 70%);
+  animation-delay: 0.4s;
+}
+
+.neon-corner-bl {
+  bottom: -4px;
+  left: -4px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.8), transparent 70%);
+  animation-delay: 0.8s;
+}
+
+.neon-corner-br {
+  bottom: -4px;
+  right: -4px;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.8), transparent 70%);
+  animation-delay: 1.2s;
+}
+
+/* Flow animations */
+@keyframes neonFlowH {
+  0% { background-position: 0% 0; }
+  100% { background-position: 300% 0; }
+}
+
+@keyframes neonFlowHReverse {
+  0% { background-position: 300% 0; }
+  100% { background-position: 0% 0; }
+}
+
+@keyframes neonFlowV {
+  0% { background-position: 0 0%; }
+  100% { background-position: 0 300%; }
+}
+
+@keyframes neonFlowVReverse {
+  0% { background-position: 0 300%; }
+  100% { background-position: 0 0%; }
+}
+
+@keyframes cornerPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* Processing mode — faster + different colors */
+.readify-neon-border.processing .neon-edge-top,
+.readify-neon-border.processing .neon-edge-bottom {
+  animation-duration: 1s;
+  box-shadow:
+    0 0 10px rgba(124, 92, 252, 0.6),
+    0 0 24px rgba(124, 92, 252, 0.3),
+    0 0 48px rgba(59, 130, 246, 0.2);
+}
+
+.readify-neon-border.processing .neon-edge-left,
+.readify-neon-border.processing .neon-edge-right {
+  animation-duration: 1s;
+  box-shadow:
+    0 0 10px rgba(124, 92, 252, 0.6),
+    0 0 24px rgba(124, 92, 252, 0.3),
+    0 0 48px rgba(59, 130, 246, 0.2);
+}
+
+/* Fade-out animation */
+.readify-neon-border.fade-out {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+/* Light mode adjustments */
+body[data-theme="light"] .neon-edge-top,
+body[data-theme="light"] .neon-edge-bottom,
+body[data-theme="light"] .neon-edge-left,
+body[data-theme="light"] .neon-edge-right {
+  height: 2px;
+  filter: blur(0.5px);
+}
+
+body[data-theme="light"] .neon-edge-left,
+body[data-theme="light"] .neon-edge-right {
+  width: 2px;
+}
+
+/* ══════════════════════════════════════════
+   SLEEPING STATE — Readify AI Floating Logo
+   ══════════════════════════════════════════ */
+.readify-ai-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  animation: fabBounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes fabBounceIn {
+  from {
+    opacity: 0;
+    transform: scale(0.3) translateY(30px);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.1) translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ── Main logo circle ── */
+.fab-logo-core {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #f59e0b 0%, #e67e22 40%, #d97706 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 4px 20px rgba(245, 158, 11, 0.4),
+    0 0 40px rgba(245, 158, 11, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 3;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.readify-ai-fab:hover .fab-logo-core {
+  transform: scale(1.12);
+  box-shadow:
+    0 6px 30px rgba(245, 158, 11, 0.55),
+    0 0 60px rgba(245, 158, 11, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.readify-ai-fab:active .fab-logo-core {
+  transform: scale(0.95);
+  transition-duration: 0.1s;
+}
+
+/* ── AI sparkle icon ── */
+.fab-ai-icon {
+  width: 32px;
+  height: 32px;
+  color: #fff;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+.fab-sparkle-main {
+  animation: sparkleRotate 4s ease-in-out infinite;
+  transform-origin: 20px 18.5px;
+}
+
+@keyframes sparkleRotate {
+
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+
+  25% {
+    transform: rotate(15deg) scale(1.1);
+    opacity: 0.9;
+  }
+
+  50% {
+    transform: rotate(0deg) scale(0.95);
+    opacity: 1;
+  }
+
+  75% {
+    transform: rotate(-15deg) scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.fab-sparkle-sm1 {
+  animation: sparkleFloat1 3s ease-in-out infinite;
+}
+
+.fab-sparkle-sm2 {
+  animation: sparkleFloat2 3.5s ease-in-out infinite 0.5s;
+}
+
+.fab-sparkle-sm3 {
+  animation: sparkleFloat3 2.8s ease-in-out infinite 1s;
+}
+
+@keyframes sparkleFloat1 {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translate(0, 0) scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-1px, 1px) scale(1.3);
+  }
+}
+
+@keyframes sparkleFloat2 {
+
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: translate(0, 0) scale(0.7);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: translate(1px, -1px) scale(1.2);
+  }
+}
+
+@keyframes sparkleFloat3 {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translate(0, 0) scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-1px, -1px) scale(1.4);
+  }
+}
+
+/* ── Animated pulse rings behind FAB ── */
+.fab-pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.fab-ring-1 {
+  width: 56px;
+  height: 56px;
+  border: 2px solid rgba(245, 158, 11, 0.25);
+  animation: fabPulse 3s ease-out infinite;
+}
+
+.fab-ring-2 {
+  width: 56px;
+  height: 56px;
+  border: 1.5px solid rgba(245, 158, 11, 0.15);
+  animation: fabPulse 3s ease-out 1s infinite;
+}
+
+.readify-ai-fab.mic-off .fab-ring-1,
+.readify-ai-fab.mic-off .fab-ring-2 {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes fabPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* ── Status indicator dot (green=active, red=off) ── */
+.fab-status-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2.5px solid #0f172a;
+  z-index: 4;
+  transition: all 0.3s ease;
+}
+
+.readify-ai-fab.mic-on .fab-status-dot {
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+.readify-ai-fab.mic-off .fab-status-dot {
+  background: #94a3b8;
+  box-shadow: none;
+}
+
+@keyframes statusPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 14px rgba(34, 197, 94, 0.7);
+  }
+}
+
+/* ── Tooltip on hover ── */
+.fab-tooltip {
+  position: absolute;
+  right: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%) translateX(8px);
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 12px;
+  padding: 8px 14px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.readify-ai-fab:hover .fab-tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+.fab-tooltip-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #f59e0b;
+  letter-spacing: 0.3px;
+}
+
+.fab-tooltip-sub {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.2px;
+}
+
+/* ══════════════════════════════════════════
+   AWAKE STATE — full assistant UI
+   ══════════════════════════════════════════ */
+
+/* ── Container ── */
+.readify-assistant {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.readify-assistant.fade-in {
+  animation: assistantIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.readify-assistant.fade-out {
+  animation: assistantOut 0.35s ease-in forwards;
+}
+
+@keyframes assistantIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(30px) scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes assistantOut {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px) scale(0.9);
+  }
+}
+
+/* ── Orb (animated circle) ── */
+.assistant-orb {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orb-core {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f59e0b, #fb923c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 24px rgba(245, 158, 11, 0.5), 0 0 60px rgba(245, 158, 11, 0.2);
+  z-index: 2;
+  transition: background 0.3s;
+}
+
+.assistant-orb.processing .orb-core {
+  background: linear-gradient(135deg, #7c5cfc, #3b82f6);
+  box-shadow: 0 0 24px rgba(124, 92, 252, 0.5), 0 0 60px rgba(124, 92, 252, 0.2);
+}
+
+.mic-icon {
+  width: 24px;
+  height: 24px;
+  color: #fff;
+}
+
+/* Processing spinner inside orb */
+.processing-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Pulse rings ── */
+.orb-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(245, 158, 11, 0.3);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ring-1 {
+  width: 64px;
+  height: 64px;
+  animation: pulse 2s ease-out infinite;
+}
+
+.ring-2 {
+  width: 80px;
+  height: 80px;
+  animation: pulse 2s ease-out 0.4s infinite;
+}
+
+.ring-3 {
+  width: 96px;
+  height: 96px;
+  animation: pulse 2s ease-out 0.8s infinite;
+}
+
+.assistant-orb.processing .orb-ring {
+  border-color: rgba(124, 92, 252, 0.3);
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* ── Response bubble ── */
+.assistant-bubble {
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 14px;
+  padding: 12px 20px;
+  max-width: 340px;
+  min-width: 180px;
+  text-align: center;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.bubble-response {
+  margin: 0 0 4px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f59e0b;
+  line-height: 1.4;
+}
+
+.bubble-transcript {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.bubble-error {
+  margin: 4px 0 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #ef4444;
+}
+
+/* ── Label ── */
+.assistant-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.3px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .readify-assistant {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .assistant-bubble {
+    max-width: 280px;
+    min-width: 160px;
+    padding: 10px 16px;
+  }
+
+  .orb-core {
+    width: 48px;
+    height: 48px;
+  }
+
+  .mic-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* ── Light theme — FAB ── */
+body[data-theme="light"] .readify-ai-fab .fab-status-dot {
+  border-color: #fff;
+}
+
+body[data-theme="light"] .fab-tooltip {
+  background: rgba(255, 252, 245, 0.95);
+  border-color: rgba(180, 83, 9, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+body[data-theme="light"] .fab-tooltip-text {
+  color: #b45309;
+}
+
+body[data-theme="light"] .fab-tooltip-sub {
+  color: rgba(30, 20, 10, 0.5);
+}
+
+body[data-theme="light"] .fab-logo-core {
+  box-shadow:
+    0 4px 20px rgba(245, 158, 11, 0.3),
+    0 0 40px rgba(245, 158, 11, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ── Light theme — Awake/Assistant ── */
+body[data-theme="light"] .assistant-bubble {
+  background: rgba(255, 252, 245, 0.95);
+  border-color: rgba(200, 134, 10, 0.2);
+}
+
+body[data-theme="light"] .bubble-transcript {
+  color: rgba(30, 20, 10, 0.7);
+}
+
+body[data-theme="light"] .assistant-label {
+  color: rgba(30, 20, 10, 0.4);
+}
+
+/* ── Responsive ──  */
+@media (max-width: 640px) {
+  .readify-ai-fab {
+    bottom: 18px;
+    right: 18px;
+    width: 52px;
+    height: 52px;
+  }
+
+  .fab-logo-core {
+    width: 48px;
+    height: 48px;
+  }
+
+  .fab-ai-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .fab-status-dot {
+    width: 12px;
+    height: 12px;
+    border-width: 2px;
+  }
+
+  .fab-tooltip {
+    display: none;
+  }
+}

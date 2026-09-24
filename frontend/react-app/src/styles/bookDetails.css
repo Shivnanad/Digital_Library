@@ -1,0 +1,2776 @@
+.details-page {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 500;
+  margin-top: 0;
+}
+
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.details-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 50%, color-mix(in oklab, var(--accent) 4%, transparent) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, color-mix(in oklab, var(--accent) 2%, transparent) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ==================== BACK TO HOME BUTTON ==================== */
+.back-to-home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  width: fit-content;
+  margin: 0;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.16), rgba(245, 158, 11, 0.08));
+  border: 1px solid rgba(245, 158, 11, 0.58);
+  border-radius: 999px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.12);
+}
+
+.back-to-home-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.back-to-home-btn:hover {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.24), rgba(245, 158, 11, 0.14));
+  border-color: var(--accent-hover);
+  color: var(--accent-hover);
+  box-shadow: 0 5px 14px rgba(245, 158, 11, 0.2), inset 0 0 16px rgba(245, 158, 11, 0.08);
+  transform: translateY(-1px);
+}
+
+.back-to-home-btn:hover::before {
+  left: 100%;
+}
+
+.back-to-home-btn span {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.back-to-home-btn span:first-child {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.details-card > .back-to-home-btn.back-to-home-top-left {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+  align-self: start;
+  margin: 0 0 12px 0;
+}
+
+@media (max-width: 768px) {
+  .back-to-home-btn {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+
+  .details-card > .back-to-home-btn.back-to-home-top-left {
+    margin-bottom: 10px;
+  }
+}
+
+/* Deprecated: keeping for backward compatibility */
+.back-link-top {
+  display: block;
+  width: auto;
+  padding: 0;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  box-sizing: border-box;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+}
+
+.back-link-top:hover {
+  color: var(--accent-hover);
+  transform: translateX(-3px);
+}
+
+/* ==================== DETAILS LEFT (SIMILAR BOOKS SIDEBAR) ==================== */
+.details-left {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 16px;
+  grid-column: 1;
+  grid-row: 2;
+}
+
+/* Book Cover Section (Column 2) */
+.book-cover-section {
+  display: none;
+}
+
+.cover-container {
+  position: relative;
+  width: 280px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #111;
+  border: 2px solid rgba(245, 158, 11, 0.25);
+  box-shadow:
+    0 24px 64px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(245,158,11,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.cover-container:hover {
+  border-color: rgba(245, 158, 11, 0.5);
+  box-shadow:
+    0 28px 72px rgba(0,0,0,0.75),
+    0 0 32px rgba(245,158,11,0.12),
+    0 0 0 1px rgba(245,158,11,0.12);
+}
+
+.details-cover {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  display: block;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.4s ease;
+}
+
+.cover-container:hover .details-cover {
+  transform: scale(1.04);
+}
+
+body[data-theme="light"] .cover-container {
+  background: #faf8f2;
+  border: 2px solid rgba(160, 110, 20, 0.3);
+  box-shadow:
+    0 16px 48px rgba(80,50,10,0.15),
+    0 0 0 1px rgba(160,110,20,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+}
+body[data-theme="light"] .cover-container:hover {
+  border-color: rgba(160, 110, 20, 0.55);
+  box-shadow:
+    0 20px 56px rgba(80,50,10,0.2),
+    0 0 24px rgba(160,110,20,0.1);
+}
+
+/* ==================== DETAILS RIGHT (INFO) ==================== */
+.details-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: var(--fg);
+  height: fit-content;
+  grid-column: 3;
+  grid-row: 1 / 3;
+}
+
+/* Book Header */
+.book-header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.book-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 12px 0;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  transition: color 0.3s ease;
+}
+
+.book-title:hover {
+  color: var(--accent);
+}
+
+.book-author {
+  font-size: 18px;
+  color: var(--accent);
+  margin: 0;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.book-author:hover {
+  color: var(--accent-hover);
+}
+
+/* Book Meta (Rating & Category) */
+.book-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 16px 0;
+}
+
+.rating-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.star-rating {
+  display: flex;
+  gap: 2px;
+}
+
+.star-rating.medium .star {
+  font-size: 20px;
+}
+
+.star-rating.small .star {
+  font-size: 14px;
+}
+
+.star {
+  transition: transform 0.2s ease;
+}
+
+.star.filled {
+  color: var(--accent);
+  text-shadow: 0 0 8px rgba(0,0,0,0.08);
+}
+
+.star.empty {
+  color: color-mix(in oklab, var(--accent) 20%, transparent);
+}
+
+.rating-text {
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.category-badge {
+  display: none;
+}
+
+.category-badge:hover {
+  display: none;
+}
+
+/* Book Description */
+.book-description {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+
+/* Book Info Grid */
+.book-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 20px 0;
+  border-top: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-label {
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.info-value {
+  font-size: 15px;
+  color: var(--fg);
+  font-weight: 500;
+}
+
+/* ==================== PRICING SECTION ==================== */
+.pricing-section {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.price-options {
+  display: flex;
+  gap: 20px;
+}
+
+.price-option {
+  flex: 1;
+  padding: 16px;
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--accent) 6%, transparent);
+  border: 2px solid color-mix(in oklab, var(--accent) 12%, transparent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.price-option:hover {
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 18%, transparent);
+  transform: translateY(-4px);
+}
+
+.price-label {
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.price-amount {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.price-period {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Success Message */
+.success-message {
+  padding: 12px 16px;
+  background: color-mix(in oklab, #22c55e 12%, transparent);
+  border: 1px solid color-mix(in oklab, #22c55e 28%, transparent);
+  border-radius: 8px;
+  color: #22c55e;
+  font-size: 14px;
+  font-weight: 500;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  flex: 1;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px var(--shadow);
+  line-height: 1.4;
+  min-height: 48px;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: var(--accent-contrast);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--accent-hover), #b45309);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.16);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: color-mix(in oklab, var(--accent) 6%, transparent);
+  color: var(--accent);
+  border: 2px solid color-mix(in oklab, var(--accent) 12%, transparent);
+}
+
+.btn-secondary:hover {
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  color: var(--accent-hover);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--accent);
+  border: 2px solid color-mix(in oklab, var(--accent) 12%, transparent);
+}
+
+.btn-outline:hover {
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+  color: var(--accent-hover);
+  border-color: color-mix(in oklab, var(--accent) 18%, transparent);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+/* ==================== SAMPLE PREVIEW SECTION ==================== */
+.sample-preview {
+  margin-top: 60px;
+  margin-left: -392px;
+  padding: 40px;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  width: calc(100% + 392px);
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 16px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.reviews-section .section-title,
+.similar-section .section-title {
+  font-size: 16px;
+  margin: 0 0 12px 0;
+  padding-bottom: 8px;
+}
+
+.preview-warning {
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  border-left: 4px solid var(--accent);
+  padding: 12px 16px;
+  border-radius: 6px;
+  color: var(--accent);
+  font-size: 13px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.preview-pages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.preview-page {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.preview-page:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in oklab, var(--accent) 18%, transparent);
+  box-shadow: 0 8px 25px color-mix(in oklab, var(--accent) 8%, transparent);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid color-mix(in oklab, var(--accent) 20%, transparent);
+}
+
+.page-number {
+  background: color-mix(in oklab, var(--accent) 20%, transparent);
+  color: var(--accent);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.page-title {
+  color: var(--fg);
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+}
+
+.page-content {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+  font-style: italic;
+}
+
+/* ==================== HORIZONTAL CAROUSEL (SIMILAR BOOKS) ==================== */
+/* ── Wave dividers ────────────────────────────────────── */
+.details-wave {
+  width: 100%;
+  height: 90px;
+  margin-bottom: -6px;
+  pointer-events: none;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* Wave going into similar-books (fill = similar-books bg: #12101f) */
+.wave-similar {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 90' preserveAspectRatio='none'%3E%3Cpath d='M0,30 C80,72 180,4 340,38 C500,72 580,8 760,44 C940,80 1040,10 1200,42 C1320,64 1390,22 1440,36 L1440,90 L0,90 Z' fill='%2312101f'/%3E%3C/svg%3E") no-repeat bottom / 100% 100%;
+}
+
+/* Wave going into reviews (fill = reviews bg: #0d0b18) */
+.wave-reviews {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 90' preserveAspectRatio='none'%3E%3Cpath d='M0,55 C120,14 240,78 420,32 C600,-14 680,70 880,38 C1080,6 1160,66 1300,34 C1380,18 1420,52 1440,44 L1440,90 L0,90 Z' fill='%230d0b18'/%3E%3C/svg%3E") no-repeat bottom / 100% 100%;
+}
+
+/* Light mode waves */
+body[data-theme="light"] .wave-similar {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 90' preserveAspectRatio='none'%3E%3Cpath d='M0,30 C80,72 180,4 340,38 C500,72 580,8 760,44 C940,80 1040,10 1200,42 C1320,64 1390,22 1440,36 L1440,90 L0,90 Z' fill='%23e8d5b0'/%3E%3C/svg%3E") no-repeat bottom / 100% 100%;
+}
+
+body[data-theme="light"] .wave-reviews {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 90' preserveAspectRatio='none'%3E%3Cpath d='M0,55 C120,14 240,78 420,32 C600,-14 680,70 880,38 C1080,6 1160,66 1300,34 C1380,18 1420,52 1440,44 L1440,90 L0,90 Z' fill='%23f5e8d3'/%3E%3C/svg%3E") no-repeat bottom / 100% 100%;
+}
+
+.similar-books-carousel {
+  width: 100%;
+  padding: 40px 0 40px 36px;
+  background:
+    radial-gradient(ellipse 60% 80% at 104%  0%,  rgba( 90, 40,180,0.30) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at  -2% 100%, rgba( 20,150,130,0.26) 0%, transparent 58%),
+    radial-gradient(ellipse 45% 40% at  50%  50%, rgba(162,104, 51,0.12) 0%, transparent 55%),
+    #12101f;
+  margin-left: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.carousel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 24px;
+  padding-right: 36px;
+  width: 100%;
+}
+
+.carousel-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 10px;
+}
+
+.carousel-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.carousel-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--accent) 20%, transparent);
+  border: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.carousel-btn:hover {
+  background: color-mix(in oklab, var(--accent) 30%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 60%, transparent);
+  color: var(--accent-hover);
+  transform: scale(1.1);
+}
+
+.carousel-btn:active {
+  transform: scale(0.95);
+}
+
+/* Horizontal Scroll Container */
+.similar-grid-horizontal {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  padding-bottom: 12px;
+  padding-right: 36px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Hide scrollbar but keep scrolling */
+.similar-grid-horizontal::-webkit-scrollbar {
+  display: none;
+}
+
+/* Individual Book Card in Carousel */
+.similar-book-card {
+  flex: 0 0 calc(25% - 12px);
+  min-width: 200px;
+  max-width: 240px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 16px;
+  position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.similar-book-card:hover {
+  background: color-mix(in oklab, var(--card-bg) 85%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 18%, transparent);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px color-mix(in oklab, var(--accent) 12%, transparent);
+}
+
+/* Badge */
+.card-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: var(--accent-contrast);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  z-index: 10;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Book Image */
+.book-image-wrapper-carousel {
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  background: rgba(31, 41, 55, 0.5);
+}
+
+.carousel-book-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.similar-book-card:hover .carousel-book-image {
+  transform: scale(1.03);
+}
+
+/* Card Content */
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.carousel-book-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  margin: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.carousel-book-author {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.carousel-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.stars {
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.rating-value {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Pricing */
+.carousel-price {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+  border-radius: 6px;
+  margin: 8px 0;
+}
+
+.price-rent,
+.price-buy {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+}
+
+.price-rent .label,
+.price-buy .label {
+  color: var(--muted);
+}
+
+.price-rent .amount,
+.price-buy .amount {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Button */
+.btn-carousel {
+  background: color-mix(in oklab, var(--accent) 20%, transparent);
+  color: var(--accent);
+  border: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: auto;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-carousel:hover {
+  background: color-mix(in oklab, var(--accent) 30%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 60%, transparent);
+  color: var(--accent-hover);
+}
+
+/* ==================== FULL-WIDTH REVIEWS SECTION ==================== */
+.reviews-section-full {
+  width: 100vw;
+  max-width: 100vw;
+  padding: 40px 36px;
+  background:
+    radial-gradient(ellipse 70% 55% at 50%  -6%,  rgba(200,128, 50,0.20) 0%, transparent 62%),
+    radial-gradient(ellipse 30% 60% at  2%  90%,  rgba( 20,150,130,0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 30% 60% at 98%  90%,  rgba(160, 50,120,0.20) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 30% at 50%  50%,  rgba( 90, 40,160,0.12) 0%, transparent 58%),
+    #0d0b18;
+  margin-left: calc(-50vw + 50%);
+  position: relative;
+}
+
+.reviews-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.reviews-section-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 0 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reviews-subtitle {
+  font-size: 14px;
+  color: #a0a0a0;
+  margin: 0 0 28px 0;
+}
+
+/* Reviews List - Vertical Stacking */
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Individual Review Card */
+.review-card-full {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.review-card-full:hover {
+  background: rgba(20, 25, 50, 0.85);
+  border-color: color-mix(in oklab, var(--accent) 40%, transparent);
+  box-shadow: 0 8px 24px color-mix(in oklab, var(--accent) 10%, transparent);
+}
+
+.review-header-full {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.reviewer-info-full {
+  flex: 1;
+  min-width: 200px;
+}
+
+.reviewer-name-full {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--fg);
+  margin: 0 0 6px 0;
+}
+
+.review-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.verified-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* ==================== LIGHT MODE FIXES (Details Page Visibility) ==================== */
+body[data-theme="light"] .details-card,
+body[data-theme="light"] .details-page {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* Light mode similar-books and reviews solid panels */
+body[data-theme="light"] .similar-books-carousel {
+  background:
+    radial-gradient(ellipse 60% 80% at 102%  0%,  rgba(162,104,51,0.38) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at  -2% 100%, rgba(127, 59,45,0.30) 0%, transparent 58%),
+    #e8d5b0;
+}
+
+body[data-theme="light"] .reviews-section-full {
+  background:
+    radial-gradient(ellipse 70% 55% at 50%  -6%,  rgba(200,128,50,0.32) 0%, transparent 62%),
+    radial-gradient(ellipse 30% 60% at  2%  90%,  rgba(162,104,51,0.26) 0%, transparent 55%),
+    radial-gradient(ellipse 30% 60% at 98%  90%,  rgba(127, 59,45,0.24) 0%, transparent 55%),
+    #f5e8d3;
+}
+
+body[data-theme="light"] .details-card {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  box-shadow: 0 12px 30px var(--shadow);
+  backdrop-filter: none;
+}
+
+body[data-theme="light"] .details-cover {
+  background: #f0ece4;
+}
+
+/* Ensure key text elements are dark on light background */
+body[data-theme="light"] .book-title,
+body[data-theme="light"] .carousel-title,
+body[data-theme="light"] .reviews-section-title,
+body[data-theme="light"] .section-title {
+  color: var(--heading) !important;
+}
+
+/* Extra protection for titles and badges on details page light mode */
+body[data-theme="light"] .carousel-title,
+body[data-theme="light"] .section-title {
+  color: var(--heading) !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+  position: relative !important;
+  z-index: 60 !important;
+}
+
+body[data-theme="light"] .card-badge {
+  color: var(--accent-contrast) !important;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover)) !important;
+  box-shadow: 0 6px 18px rgba(15,23,42,0.06) !important;
+  z-index: 70 !important;
+}
+
+body[data-theme="light"] .book-author,
+body[data-theme="light"] .price-amount,
+body[data-theme="light"] .card-badge {
+  color: var(--accent) !important;
+}
+
+body[data-theme="light"] .book-description,
+body[data-theme="light"] .rating-text,
+body[data-theme="light"] .info-value,
+body[data-theme="light"] .page-title,
+body[data-theme="light"] .page-content,
+body[data-theme="light"] .carousel-book-author,
+body[data-theme="light"] .rating-value,
+body[data-theme="light"] .carousel-book-title {
+  color: var(--muted) !important;
+}
+
+body[data-theme="light"] .preview-page,
+body[data-theme="light"] .review-card-full,
+body[data-theme="light"] .similar-book-card,
+body[data-theme="light"] .review-card-full {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+}
+
+/* Fix any lingering dark gradient on details-card by increasing specificity */
+html body[data-theme="light"] .details-card {
+  background-image: none !important;
+}
+
+
+.review-date-full {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.rating-stars-full {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+  text-align: center;
+}
+
+.stars-display {
+  font-size: 16px;
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+
+.rating-number {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Review Text */
+.review-text-full {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0 0 16px 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Review Footer - Helpful Buttons */
+.review-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid var(--card-border);
+  padding-top: 12px;
+}
+
+.review-btn {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--card-border);
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.review-btn:hover {
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 18%, transparent);
+  color: var(--accent);
+}
+
+/* ==================== REVIEWS SECTION ==================== */
+.reviews-section {
+  margin-top: 0;
+  padding: 20px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 40px var(--shadow);
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.review-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in oklab, var(--accent) 18%, transparent);
+  box-shadow: 0 8px 25px color-mix(in oklab, var(--accent) 8%, transparent);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 12px;
+}
+
+.reviewer-info {
+  flex: 1;
+}
+
+.reviewer-name {
+  color: var(--fg);
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.review-date {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0;
+}
+
+.review-text {
+  color: var(--fg);
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ==================== SIMILAR BOOKS SECTION ==================== */
+.similar-section {
+  margin-top: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.similar-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+  height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+}
+
+/* Scrollbar styling */
+.similar-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.similar-grid::-webkit-scrollbar-track {
+  background: color-mix(in oklab, var(--accent) 5%, transparent);
+}
+
+.similar-grid::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--accent) 40%, transparent);
+  border-radius: 3px;
+}
+
+.similar-grid::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--accent) 60%, transparent);
+}
+
+.similar-grid .book-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 12px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.similar-grid .book-card:hover {
+  background: color-mix(in oklab, var(--card-bg) 80%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 18%, transparent);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px color-mix(in oklab, var(--accent) 8%, transparent);
+}
+
+.similar-grid .book-image-wrapper {
+  width: 100%;
+  height: 140px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.similar-grid .book-title {
+  font-size: 12px;
+  font-weight: 600;
+  margin: 6px 0 3px;
+  color: var(--fg);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.similar-grid .book-author {
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.similar-grid .details-btn {
+  font-size: 10px;
+  padding: 5px 10px;
+  margin-top: 6px;
+  background: color-mix(in oklab, var(--accent) 20%, transparent);
+  color: var(--accent);
+  border: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* ==================== ERROR & LOADING ==================== */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 60px 20px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid color-mix(in oklab, var(--accent) 18%, transparent);
+  border-top: 4px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+body[data-theme="light"] .spinner {
+  border: 4px solid rgba(120, 100, 60, 0.15);
+  border-top: 4px solid rgba(120, 100, 60, 0.4);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner p {
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.error-container {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.error-message {
+  color: color-mix(in oklab, #fca5a5 60%, transparent);
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.error-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.08));
+  border: 1.5px solid var(--accent);
+  border-radius: 8px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
+.error-back-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.error-back-link:hover {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(245, 158, 11, 0.15));
+  border-color: var(--accent-hover);
+  color: var(--accent-hover);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.3), inset 0 0 20px rgba(245, 158, 11, 0.1);
+  transform: translateY(-2px);
+}
+
+.error-back-link:hover::before {
+  left: 100%;
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+.details-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 50%, color-mix(in oklab, var(--accent) 8%, transparent) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, color-mix(in oklab, var(--accent) 5%, transparent) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.details-card {
+  display: grid;
+  grid-template-columns: 320px 1fr 360px;
+  grid-template-rows: auto 1fr;
+  gap: 36px;
+  background: linear-gradient(180deg, rgba(15,20,30,0.96), rgba(18,22,36,0.94));
+  padding: 36px;
+  border-radius: 0;
+  width: 100vw;
+  max-width: 100vw;
+  box-sizing: border-box;
+  margin: 0;
+  box-shadow: none;
+  border: none;
+  position: relative;
+  z-index: 520;
+  animation: slideIn 0.6s ease-out;
+  backdrop-filter: blur(8px);
+  align-items: flex-start;
+}
+
+.details-center {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  overflow: visible;
+  grid-column: 2;
+  grid-row: 1 / 3;
+}
+
+/* Responsive: stack into single column on tablet/mobile */
+@media (max-width: 1200px) {
+  .details-page {
+    padding: 0 0 30px 0;
+  }
+
+  .details-card {
+    grid-template-columns: 320px 1fr 360px;
+    grid-template-rows: auto 1fr;
+    padding: 24px;
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  .back-link-top {
+    padding: 0;
+    width: auto;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* Carousel responsive */
+  .similar-books-carousel {
+    padding: 30px 24px;
+  }
+
+  .carousel-title {
+    font-size: 20px;
+  }
+
+  .similar-book-card {
+    flex: 0 0 calc(33.33% - 11px);
+    max-width: 200px;
+  }
+
+  /* Reviews responsive */
+  .reviews-section-full {
+    padding: 30px 24px;
+  }
+
+  .reviews-section-title {
+    font-size: 24px;
+  }
+
+  .review-card-full {
+    padding: 16px;
+  }
+
+  .review-header-full {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .rating-stars-full {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .details-page {
+    padding: 0 0 24px 0;
+  }
+
+  .back-link-top {
+    padding: 0;
+    width: auto;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .details-card {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    padding: 18px;
+    gap: 18px;
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  .details-left {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+  }
+
+  .cover-container {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 16px;
+  }
+
+  .details-center {
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+  }
+
+  .details-right {
+    grid-column: 1;
+    grid-row: 3;
+    width: 100%;
+    order: 3;
+  }
+
+  /* Mobile Carousel */
+  .similar-books-carousel {
+    padding: 20px 18px;
+    margin-left: calc(-50vw + 50%);
+  }
+
+  .carousel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .carousel-title {
+    font-size: 18px;
+  }
+
+  .carousel-controls {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+
+  .carousel-btn {
+    flex: 1;
+  }
+
+  .similar-book-card {
+    flex: 0 0 calc(50% - 8px);
+    max-width: 160px;
+  }
+
+  .book-image-wrapper-carousel {
+    height: 160px;
+  }
+
+  .carousel-book-title {
+    font-size: 12px;
+  }
+
+  /* Mobile Reviews */
+  .reviews-section-full {
+    padding: 20px 18px;
+  }
+
+  .reviews-section-title {
+    font-size: 20px;
+  }
+
+  .reviews-container {
+    max-width: 100%;
+  }
+
+  .review-card-full {
+    padding: 14px;
+  }
+
+  .review-header-full {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .reviewer-name-full {
+    font-size: 13px;
+  }
+
+  .review-text-full {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .review-footer {
+    gap: 8px;
+  }
+
+  .review-btn {
+    padding: 6px 12px;
+    font-size: 11px;
+    flex: 1;
+  }
+}
+
+  .book-title { font-size: 28px; }
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.details-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: rgba(0,0,0,0.3);
+}
+
+.cover-container:hover .details-cover {
+  transform: scale(1.05);
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+@media (max-width: 1024px) {
+  .details-page {
+    padding: 60px 16px 30px;
+  }
+
+  .details-card {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px;
+  }
+
+  .details-left {
+    display: flex;
+    justify-content: center;
+    order: 1;
+  }
+
+  .details-center {
+    order: 2;
+  }
+
+  .details-right {
+    order: 3;
+  }
+
+  .book-title {
+    font-size: 32px;
+  }
+
+  .book-author {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .details-page {
+    padding: 60px 12px 24px;
+  }
+
+  .back-link-top {
+    margin: 0 auto 20px auto;
+    font-size: 13px;
+  }
+
+  .details-card {
+    padding: 18px;
+    gap: 18px;
+    border-radius: 12px;
+  }
+
+  .cover-container {
+    width: 240px;
+    margin: 0 auto;
+  }
+
+  .book-title {
+    font-size: 26px;
+  }
+
+  .book-header {
+    padding-bottom: 16px;
+  }
+
+  .book-meta {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .book-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .price-options {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .price-option {
+    padding: 12px;
+  }
+
+  .price-amount {
+    font-size: 24px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  .sample-preview {
+    padding: 20px;
+    margin-top: 30px;
+    background: transparent;
+    border: none;
+  }
+
+  .section-title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .preview-pages {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .preview-page {
+    padding: 16px;
+  }
+
+  .reviews-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .review-card {
+    padding: 16px;
+  }
+
+  .similar-grid {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .similar-grid .book-image-wrapper {
+    height: 160px;
+  }
+
+  .similar-grid .book-title {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .details-page {
+    padding: 60px 10px 20px;
+  }
+
+  .details-card {
+    padding: 14px;
+    gap: 14px;
+  }
+
+  .cover-container {
+    width: 240px;
+    height: 360px;
+    margin: 0 auto;
+  }
+
+  .book-title {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .book-author {
+    font-size: 13px;
+  }
+
+  .book-description {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .info-item {
+    gap: 2px;
+  }
+
+  .info-label {
+    font-size: 10px;
+  }
+
+  .info-value {
+    font-size: 13px;
+  }
+
+  .price-amount {
+    font-size: 20px;
+  }
+
+  .btn {
+    padding: 10px 12px;
+    font-size: 12px;
+    min-height: 40px;
+  }
+
+  .section-title {
+    font-size: 16px;
+  }
+
+  .page-content {
+    font-size: 12px;
+  }
+
+  .review-header {
+    gap: 8px;
+  }
+
+  .review-text {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+}
+.book-details-page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: var(--bg);
+}
+
+.book-details-container {
+  width: 100%;
+  max-width: 1200px; /* 🔥 THIS fixes the alignment */
+  padding: 32px 24px;
+}
+
+/* ========== COMPREHENSIVE DARK/LIGHT THEME OVERRIDES ========== */
+
+/* Light theme: ensure all elements respond properly */
+body[data-theme="light"] .details-page {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+body[data-theme="light"] .details-page::before {
+  background: radial-gradient(circle at 12% 30%, color-mix(in oklab, var(--accent-2) 6%, transparent) 0%, transparent 40%),
+              radial-gradient(circle at 80% 70%, color-mix(in oklab, var(--accent-3) 4%, transparent) 0%, transparent 45%);
+  mix-blend-mode: normal;
+  opacity: 1;
+}
+
+body[data-theme="light"] .back-link-top,
+body[data-theme="light"] .book-title,
+body[data-theme="light"] .book-author,
+body[data-theme="light"] .info-label,
+body[data-theme="light"] .info-value {
+  color: inherit;
+}
+
+body[data-theme="light"] .book-title {
+  color: var(--heading);
+  text-shadow: none;
+}
+
+body[data-theme="light"] .book-title:hover {
+  color: var(--accent);
+}
+
+body[data-theme="light"] .carousel-book-title {
+  color: var(--heading);
+}
+
+body[data-theme="light"] .similar-grid .book-title {
+  color: var(--heading);
+}
+
+body[data-theme="light"] .book-description,
+body[data-theme="light"] .rating-text,
+body[data-theme="light"] .price-period {
+  color: var(--muted);
+}
+
+body[data-theme="light"] .price-label,
+body[data-theme="light"] .review-date-full,
+body[data-theme="light"] .rating-value,
+body[data-theme="light"] .price-rent .label,
+body[data-theme="light"] .price-buy .label {
+  color: var(--muted);
+}
+
+body[data-theme="light"] .price-option,
+body[data-theme="light"] .reviews-section,
+body[data-theme="light"] .review-card {
+  background: var(--card-bg);
+  border-color: var(--card-border);
+}
+
+body[data-theme="light"] .details-card,
+body[data-theme="light"] .book-header {
+  border-color: var(--card-border);
+}
+
+body[data-theme="light"] .btn,
+body[data-theme="light"] .details-btn {
+  box-shadow: 0 4px 15px var(--shadow);
+}
+
+body[data-theme="light"] .preview-warning {
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  border-left: 4px solid var(--accent);
+  color: var(--accent);
+}
+
+/* Dark theme (default): ensure explicit dark styling with proper contrast and elevation */
+body:not([data-theme="light"]) .details-page {
+  background: var(--bg);
+  color: var(--text-secondary);
+}
+
+/* Dark mode: high-contrast white titles */
+body:not([data-theme="light"]) .details-page .book-title,
+body:not([data-theme="light"]) .book-title,
+body:not([data-theme="light"]) .carousel-book-title,
+body:not([data-theme="light"]) .similar-grid .book-title {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+body:not([data-theme="light"]) .book-title:hover {
+  color: var(--accent);
+}
+
+/* Dark mode: secondary text in light gray */
+body:not([data-theme="light"]) .book-description,
+body:not([data-theme="light"]) .info-value,
+body:not([data-theme="light"]) .rating-text,
+body:not([data-theme="light"]) .review-text-full {
+  color: var(--text-secondary);
+}
+
+/* Dark mode: muted labels in softer gray */
+body:not([data-theme="light"]) .price-label,
+body:not([data-theme="light"]) .review-date-full,
+body:not([data-theme="light"]) .rating-value,
+body:not([data-theme="light"]) .price-rent .label,
+body:not([data-theme="light"]) .price-buy .label,
+body:not([data-theme="light"]) .info-label {
+  color: var(--muted);
+}
+
+/* Dark mode: accent colors for ratings and interactive elements */
+body:not([data-theme="light"]) .stars,
+body:not([data-theme="light"]) .star.filled {
+  color: var(--accent);
+}
+
+body:not([data-theme="light"]) .star.empty {
+  color: color-mix(in oklab, var(--accent) 20%, transparent);
+}
+
+/* Dark mode: card elevation with visible borders and shadows */
+body:not([data-theme="light"]) .book-header {
+  border-bottom: 1px solid var(--dark-border);
+  padding-bottom: 20px;
+}
+
+body:not([data-theme="light"]) .book-info-grid {
+  border-top: 1px solid var(--dark-border);
+  border-bottom: 1px solid var(--dark-border);
+}
+
+body:not([data-theme="light"]) .cover-container {
+  box-shadow: var(--dark-shadow-lg);
+  border: 1px solid var(--dark-border);
+}
+
+/* Dark mode: pricing boxes with elevation */
+body:not([data-theme="light"]) .price-option {
+  background: var(--surface);
+  border: 1px solid var(--dark-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body:not([data-theme="light"]) .price-option:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Dark mode: buttons with proper shadow */
+body:not([data-theme="light"]) .btn,
+body:not([data-theme="light"]) .details-btn {
+  box-shadow: var(--dark-shadow);
+}
+
+body:not([data-theme="light"]) .btn:hover,
+body:not([data-theme="light"]) .details-btn:hover {
+  box-shadow: var(--dark-shadow-lg);
+}
+
+/* Dark mode: preview cards and review cards */
+body:not([data-theme="light"]) .preview-page,
+body:not([data-theme="light"]) .review-card,
+body:not([data-theme="light"]) .review-card-full {
+  background: var(--surface);
+  border: 1px solid var(--dark-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+body:not([data-theme="light"]) .review-card:hover,
+body:not([data-theme="light"]) .review-card-full:hover {
+  background: var(--surface-hover);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark mode: sample preview section */
+body:not([data-theme="light"]) .sample-preview {
+  background: transparent;
+}
+
+body:not([data-theme="light"]) .preview-warning {
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+  border-left: 4px solid var(--accent);
+  color: var(--text-secondary);
+}
+
+/* Dark mode: reviews section */
+body:not([data-theme="light"]) .reviews-section {
+  background: transparent;
+  border: 1px solid var(--dark-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode: ensure details card and center area have proper background */
+body:not([data-theme="light"]) .details-card,
+body:not([data-theme="light"]) .details-center {
+  background: transparent;
+}
+
+/* Dark mode: page header with proper contrast */
+body:not([data-theme="light"]) .page-header {
+  border-bottom: 1px solid var(--dark-border);
+}
+
+/* Dark mode: carousel buttons visibility */
+body:not([data-theme="light"]) .carousel-btn {
+  border: 2px solid var(--dark-border);
+  box-shadow: var(--dark-shadow);
+}
+
+body:not([data-theme="light"]) .carousel-btn:hover {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  box-shadow: var(--dark-shadow-lg);
+}
+
+/* ==================================================================================
+   Explicit .dark scoping for Book Details page components (mandatory fixes)
+   - Ensures the Details page uses a true dark surface and contrast when `.dark` is present
+   - Targets: hero/upper section, pricing cards, preview cards, book cover
+   ================================================================================== */
+
+.dark .details-page {
+  background: #0f172a; /* true dark page background */
+  color: #f9fafb; /* primary text */
+}
+
+.dark .details-page::before {
+  /* remove heavy colored radial splashes that reduce contrast */
+  background: none !important;
+  opacity: 1;
+}
+
+.dark .book-header,
+.dark .details-card,
+.dark .details-center {
+  background: transparent;
+  border-color: var(--overlay-lg);
+}
+
+.dark .book-title,
+.dark .carousel-book-title,
+.dark .similar-grid .book-title {
+  color: #f9fafb; /* title high contrast */
+}
+
+.dark .book-description,
+.dark .info-value,
+.dark .rating-text,
+.dark .review-text-full {
+  color: #cbd5e1; /* secondary text */
+}
+
+.dark .price-label,
+.dark .review-date-full,
+.dark .rating-value,
+.dark .price-rent .label,
+.dark .price-buy .label,
+.dark .info-label {
+  color: #94a3b8; /* muted */
+}
+
+.dark .cover-container {
+  background: #0b1220;
+  border-radius: 12px;
+  border: 1px solid var(--overlay-lg);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+}
+
+.dark .details-cover {
+  /* ensure cover stands out with slight inner contrast */
+  background: linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
+}
+
+.dark .price-option,
+.dark .preview-page,
+.dark .review-card,
+.dark .review-card-full,
+.dark .book-card {
+  background: var(--card-bg); /* card background slightly lighter than page */
+  border: 1px solid var(--card-border);
+  box-shadow: var(--dark-shadow);
+}
+
+.dark .price-option:hover,
+.dark .preview-page:hover,
+.dark .review-card:hover {
+  background: #0f172a !important;
+  border-color: rgba(245,158,11,0.08) !important;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.7) !important;
+}
+
+.dark .btn,
+.dark .details-btn {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+}
+
+.dark .carousel-btn,
+.dark .carousel-btn:hover {
+  border: 1px solid var(--overlay-md);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+}
+
+/* ensure preview sample pages are elevated and readable */
+.dark .sample-preview,
+.dark .preview-pages .preview-page {
+  background: #0f172a;
+  border: 1px solid var(--overlay-lg);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.6);
+}
+
+/* keep rating stars visible with accent */
+.dark .stars,
+.dark .star.filled {
+  color: var(--accent);
+}
+
+/* fallback: ensure any accidentally hardcoded whites are overridden */
+.dark [style*="#fff"],
+.dark [style*="#ffffff"],
+.dark [style*="#f5f5f5"],
+.dark [style*="#eee"] {
+  color: inherit !important;
+  background: inherit !important;
+}
+
+/* ==================== REVIEWS — REAL SYSTEM ==================== */
+
+/* Top two-column layout: summary + write form */
+.reviews-top {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 40px;
+  margin-bottom: 40px;
+  align-items: flex-start;
+}
+
+/* Summary panel */
+.reviews-summary {}
+
+.avg-rating-big {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 14px 0 18px;
+}
+
+.avg-number {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.avg-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Rating breakdown bars */
+.rating-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-width: 320px;
+}
+
+.breakdown-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.breakdown-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  min-width: 32px;
+  text-align: right;
+}
+
+.breakdown-bar-track {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.breakdown-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #f97316);
+  border-radius: 99px;
+  transition: width 0.6s ease;
+}
+
+.breakdown-count {
+  font-size: 12px;
+  color: var(--muted, #94a3b8);
+  min-width: 22px;
+}
+
+/* Write Review Panel */
+.write-review-box {
+  background: rgba(20, 25, 50, 0.6);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 14px;
+  padding: 26px 28px;
+  backdrop-filter: blur(12px);
+}
+
+.write-review-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--heading, #f1f5f9);
+  margin: 0 0 20px;
+}
+
+.review-login-prompt {
+  color: var(--muted, #94a3b8);
+  font-size: 14px;
+}
+
+.review-login-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+/* Review Form */
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg, #e2e8f0);
+  letter-spacing: 0.3px;
+}
+
+/* Star Picker */
+.star-picker {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star-pick-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  font-size: 28px;
+  line-height: 1;
+  transition: transform 0.15s ease, color 0.15s ease;
+  color: rgba(255, 255, 255, 0.18);
+}
+
+.star-pick-btn.filled {
+  color: #f59e0b;
+}
+
+.star-pick-btn:hover {
+  transform: scale(1.25);
+}
+
+.star-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-left: 8px;
+}
+
+.review-input {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: var(--fg, #e2e8f0);
+  font-size: 14px;
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.review-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+}
+
+.review-textarea {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: var(--fg, #e2e8f0);
+  font-size: 14px;
+  padding: 10px 14px;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 96px;
+}
+
+.review-textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+}
+
+.char-count {
+  font-size: 11px;
+  color: var(--muted, #64748b);
+  text-align: right;
+  margin-top: -4px;
+}
+
+.review-error {
+  color: #f87171;
+  font-size: 13px;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 0;
+}
+
+.review-success {
+  color: #4ade80;
+  font-size: 13px;
+  background: rgba(74, 222, 128, 0.1);
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 0;
+}
+
+.review-submit-btn {
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  color: #0f172a;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+  font-family: inherit;
+  letter-spacing: 0.3px;
+}
+
+.review-submit-btn:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.review-submit-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Reviews List */
+.reviews-loading,
+.reviews-empty {
+  color: var(--muted, #94a3b8);
+  font-size: 15px;
+  padding: 24px 0;
+  text-align: center;
+}
+
+/* Reviewer avatar */
+.reviewer-info-full {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.reviewer-avatar {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  color: #0f172a;
+  font-size: 17px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.review-date-full {
+  font-size: 12px;
+  color: var(--muted, #64748b);
+}
+
+.review-title-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--fg, #e2e8f0);
+  margin: 0 0 6px;
+}
+
+/* Helpful footer */
+.review-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.helpful-label {
+  font-size: 12px;
+  color: var(--muted, #94a3b8);
+}
+
+.review-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--fg, #cbd5e1);
+  font-size: 13px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  font-family: inherit;
+}
+
+.review-btn:hover:not(:disabled) {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: var(--accent);
+}
+
+.review-btn.voted {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.5);
+  color: var(--accent);
+}
+
+.review-btn:disabled {
+  cursor: default;
+}
+
+/* Light mode adjustments */
+body[data-theme="light"] .write-review-box {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(30, 58, 138, 0.2);
+}
+
+body[data-theme="light"] .write-review-title {
+  color: #1e293b;
+}
+
+body[data-theme="light"] .review-input,
+body[data-theme="light"] .review-textarea {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #1e293b;
+}
+
+body[data-theme="light"] .review-input:focus,
+body[data-theme="light"] .review-textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+body[data-theme="light"] .star-pick-btn {
+  color: rgba(0, 0, 0, 0.15);
+}
+
+body[data-theme="light"] .star-pick-btn.filled {
+  color: #f59e0b;
+}
+
+body[data-theme="light"] .review-submit-btn {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+}
+
+body[data-theme="light"] .breakdown-bar-track {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+body[data-theme="light"] .reviewer-avatar {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+}
+
+body[data-theme="light"] .review-card-full:hover {
+  background: rgba(241, 245, 249, 0.9);
+  border-color: rgba(37, 99, 235, 0.3);
+}
+
+body[data-theme="light"] .review-btn:hover:not(:disabled) {
+  background: rgba(37, 99, 235, 0.08);
+  border-color: rgba(37, 99, 235, 0.4);
+  color: #2563eb;
+}
+
+body[data-theme="light"] .review-btn.voted {
+  background: rgba(37, 99, 235, 0.12);
+  border-color: rgba(37, 99, 235, 0.5);
+  color: #2563eb;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .reviews-top {
+    grid-template-columns: 1fr;
+  }
+  .avg-number { font-size: 44px; }
+  .write-review-box { padding: 20px; }
+}
+
+/* ════════════════════════════════════════
+   PLAYLIST MODAL
+   ════════════════════════════════════════ */
+.playlist-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.playlist-modal {
+  background: linear-gradient(160deg, #14172e 0%, #0e1023 100%);
+  border: 1px solid rgba(162, 104, 51, 0.25);
+  border-radius: 16px;
+  padding: 28px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  animation: pmSlideIn 0.22s ease-out both;
+}
+
+@keyframes pmSlideIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.playlist-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.playlist-modal-header h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--fg, #f5ede0);
+  margin: 0;
+}
+
+.playlist-modal-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+}
+.playlist-modal-close:hover { background: rgba(255,255,255,0.08); color: #fff; }
+
+.playlist-msg {
+  font-size: 0.88rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.playlist-msg.success { background: rgba(34,197,94,0.12); color: #4ade80; border: 1px solid rgba(34,197,94,0.25); }
+.playlist-msg.error   { background: rgba(239,68,68,0.12);  color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+
+.playlist-loading,
+.playlist-empty {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 12px 0;
+}
+
+.playlist-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  max-height: 240px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(162,104,51,0.3) transparent;
+}
+
+.playlist-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  transition: background 0.15s;
+}
+.playlist-item:hover { background: rgba(255,255,255,0.04); }
+
+.playlist-color-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.playlist-name {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--fg, #eee);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.playlist-count {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.35);
+  flex-shrink: 0;
+}
+
+.playlist-add-btn {
+  background: rgba(162,104,51,0.15);
+  border: 1px solid rgba(162,104,51,0.3);
+  color: #f59e0b;
+  border-radius: 7px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.playlist-add-btn:hover { background: rgba(162,104,51,0.3); }
+
+.playlist-create-form {
+  display: flex;
+  gap: 8px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 16px;
+}
+
+.playlist-create-input {
+  flex: 1;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 9px 14px;
+  color: var(--fg, #eee);
+  font-size: 0.88rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.playlist-create-input::placeholder { color: rgba(255,255,255,0.3); }
+.playlist-create-input:focus { border-color: rgba(162,104,51,0.5); }
+
+.playlist-create-btn {
+  background: #a26833;
+  border: none;
+  color: #faeade;
+  border-radius: 8px;
+  padding: 9px 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.playlist-create-btn:hover:not(:disabled) { background: #c27c3a; }
+.playlist-create-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* Light mode */
+body[data-theme="light"] .playlist-modal {
+  background: #ffffff;
+  border-color: rgba(120,80,30,0.15);
+}
+body[data-theme="light"] .playlist-modal-header h3 { color: #1a1a2e; }
+body[data-theme="light"] .playlist-modal-close { color: #666; }
+body[data-theme="light"] .playlist-name { color: #1a1a2e; }
+body[data-theme="light"] .playlist-create-input {
+  background: #f5f7fc;
+  border-color: rgba(0,0,0,0.12);
+  color: #1a1a2e;
+}

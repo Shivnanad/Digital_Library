@@ -1,0 +1,745 @@
+/* ------------------------------------------------------
+   HOME PAGE
+   ------------------------------------------------------ */
+
+/* -- Root ----------------------------------------------- */
+.home-root {
+  position: relative;
+  overflow-x: hidden;
+  font-family: 'Outfit', sans-serif;
+  min-height: 100vh;
+}
+
+/* -- Hero → Content wave divider ----------------------- */
+/* Dark: body-color wave rising up, slight amber glow top edge */
+.home-wave {
+  position: relative;
+  height: 80px;
+  margin-top: -2px;
+  z-index: 2;
+  pointer-events: none;
+  background-color: #000;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0,50 C100,76 220,18 400,44 C580,70 660,16 840,42 C1020,68 1110,20 1270,46 C1370,60 1415,34 1440,48 L1440,80 L0,80 Z' fill='%23080c18'/%3E%3C/svg%3E") no-repeat bottom / 100% 100%;
+}
+/* Amber glow line at the top of the wave, dark mode only */
+.home-wave::before {
+  content: '';
+  position: absolute;
+  top: 34px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(162,104,51,0.25) 15%,
+    rgba(227,164,88,0.45) 40%,
+    rgba(227,164,88,0.45) 60%,
+    rgba(162,104,51,0.25) 85%,
+    transparent 100%);
+  filter: blur(1px);
+}
+
+/* Light: cream body-color wave over black hero bottom — dramatic */
+body[data-theme="light"] .home-wave {
+  background-color: #000;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0,50 C100,76 220,18 400,44 C580,70 660,16 840,42 C1020,68 1110,20 1270,46 C1370,60 1415,34 1440,48 L1440,80 L0,80 Z' fill='%23f2e4cc'/%3E%3C/svg%3E") no-repeat bottom / 100% 100%;
+}
+body[data-theme="light"] .home-wave::before {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(127,59,45,0.2) 15%,
+    rgba(162,104,51,0.35) 40%,
+    rgba(162,104,51,0.35) 60%,
+    rgba(127,59,45,0.2) 85%,
+    transparent 100%);
+}
+
+/* -- Loading / Error / Empty ---------------------------- */
+.loading-container,
+.error-container,
+.empty-container {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg);
+  position: relative;
+  z-index: 2;
+}
+
+.loading-text {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.75;
+  color: var(--accent);
+  margin: 0;
+}
+
+.error-card, .empty-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 48px 64px;
+  border-radius: 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(24px);
+  box-shadow: var(--dark-shadow-lg);
+}
+
+.error-icon, .empty-icon { font-size: 40px; }
+
+/* -- Home container ------------------------------------- */
+.home-container {
+  width: 100%;
+  margin: 0 auto 40px auto;
+  padding: 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* -- XP + Mood Feed ------------------------------------ */
+.xp-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  padding: 18px 18px 10px;
+  perspective: 1000px;
+}
+
+.xp-card {
+  background:
+    radial-gradient(120% 120% at -10% 0%, rgba(124, 92, 252, 0.16), transparent 55%),
+    linear-gradient(145deg, rgba(16, 24, 40, 0.92), rgba(12, 18, 32, 0.95));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 15px 16px;
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0) rotateX(0deg);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  animation: xpCardIn .5s ease both;
+}
+
+.xp-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.13) 50%, transparent 80%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.xp-card:hover {
+  transform: translateY(-4px) rotateX(2deg);
+  border-color: rgba(245, 158, 11, 0.35);
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(245, 158, 11, 0.15),
+    0 0 28px rgba(245, 158, 11, 0.1);
+}
+
+.xp-card:hover::before {
+  animation: xpShine 0.9s ease;
+}
+
+.xp-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #91a5c0;
+  font-weight: 700;
+}
+
+.xp-value {
+  margin-top: 6px;
+  font-family: "Playfair Display", serif;
+  font-size: 30px;
+  color: #f8f2e9;
+  line-height: 1.1;
+  text-shadow: 0 2px 14px rgba(245, 158, 11, 0.18);
+}
+
+.xp-sub {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #9fb1c8;
+}
+
+.xp-card.mood-state {
+  background:
+    radial-gradient(120% 120% at 100% 0%, rgba(245, 158, 11, 0.2), transparent 50%),
+    linear-gradient(145deg, rgba(18, 24, 38, 0.94), rgba(12, 17, 30, 0.96));
+  border-color: rgba(245, 158, 11, 0.36);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.34),
+    0 0 28px rgba(245, 158, 11, 0.12);
+}
+
+@keyframes xpCardIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes moodBlockIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes xpShine {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(140%); }
+}
+
+body[data-theme="light"] .xp-card {
+  background:
+    radial-gradient(120% 120% at -10% 0%, rgba(99, 68, 200, 0.1), transparent 55%),
+    linear-gradient(145deg, rgba(255, 250, 242, 0.92), rgba(250, 243, 230, 0.95));
+  border-color: rgba(120, 100, 60, 0.12);
+}
+
+body[data-theme="light"] .xp-title { color: #705f4f; }
+body[data-theme="light"] .xp-value { color: #1f1a14; text-shadow: none; }
+body[data-theme="light"] .xp-sub { color: #5c5248; }
+
+.mood-feed-block {
+  margin: 6px 18px 12px;
+  padding: 24px 22px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 0%, rgba(124, 92, 252, 0.12), transparent 58%),
+    radial-gradient(ellipse 50% 70% at 100% 100%, color-mix(in srgb, var(--mood-color, #f59e0b) 15%, transparent), transparent 60%),
+    linear-gradient(155deg, rgba(16, 20, 36, 0.96), rgba(10, 14, 28, 0.98));
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  animation: moodBlockIn .55s ease both;
+  transition: border-color 0.4s ease, background 0.4s ease;
+}
+
+.mood-feed-block::before {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  right: -180px;
+  top: -200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--mood-color, #f59e0b) 18%, transparent), transparent 68%);
+  pointer-events: none;
+  transition: background 0.6s ease;
+  animation: moodOrbFloat 8s ease-in-out infinite;
+}
+
+.mood-feed-block::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  left: -120px;
+  bottom: -160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 92, 252, 0.12), transparent 65%);
+  pointer-events: none;
+  animation: moodOrbFloat 10s ease-in-out infinite reverse;
+}
+
+@keyframes moodOrbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(12px, -8px) scale(1.05); }
+  66% { transform: translate(-8px, 6px) scale(0.95); }
+}
+
+.mood-feed-header h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 26px;
+  color: #f9efe0;
+  letter-spacing: 0.2px;
+  position: relative;
+  z-index: 1;
+}
+
+.mood-feed-header p {
+  margin-top: 4px;
+  color: #a8bbd1;
+  font-size: 13px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Mood Selector Grid ── */
+.mood-selector-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Individual Mood Card ── */
+.mood-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 20px 12px 16px;
+  border-radius: 16px;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  background:
+    radial-gradient(ellipse 100% 100% at 50% 0%, color-mix(in srgb, var(--card-color) 8%, transparent), transparent 70%),
+    rgba(14, 18, 32, 0.78);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: moodCardIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation-delay: calc(var(--card-index) * 0.08s);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@keyframes moodCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Glow layer behind card */
+.mood-card-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  background: var(--card-gradient);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.4s ease;
+  filter: blur(12px);
+}
+
+/* Floating particles */
+.mood-card-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.mood-card-particles span {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--card-color);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mood-card-particles span:nth-child(1) { left: 15%; top: 20%; animation: moodParticle 3s ease-in-out infinite 0.0s; }
+.mood-card-particles span:nth-child(2) { left: 75%; top: 30%; animation: moodParticle 3.5s ease-in-out infinite 0.5s; width: 2px; height: 2px; }
+.mood-card-particles span:nth-child(3) { left: 45%; top: 70%; animation: moodParticle 4s ease-in-out infinite 1.0s; }
+.mood-card-particles span:nth-child(4) { left: 85%; top: 65%; animation: moodParticle 3.2s ease-in-out infinite 1.5s; width: 4px; height: 4px; }
+.mood-card-particles span:nth-child(5) { left: 25%; top: 80%; animation: moodParticle 3.8s ease-in-out infinite 2.0s; width: 2px; height: 2px; }
+.mood-card-particles span:nth-child(6) { left: 60%; top: 15%; animation: moodParticle 4.2s ease-in-out infinite 0.8s; }
+
+@keyframes moodParticle {
+  0%, 100% { opacity: 0; transform: translateY(0) scale(0.5); }
+  30% { opacity: 0.6; transform: translateY(-8px) scale(1); }
+  70% { opacity: 0.4; transform: translateY(-16px) scale(0.8); }
+}
+
+/* Icon */
+.mood-card-icon {
+  font-size: 32px;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+  line-height: 1;
+}
+
+/* Label */
+.mood-card-label {
+  font-family: "Outfit", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #d2deec;
+  letter-spacing: 0.04em;
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Description */
+.mood-card-desc {
+  font-size: 11px;
+  color: #7a8da3;
+  text-align: center;
+  line-height: 1.35;
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s ease;
+  max-width: 140px;
+}
+
+/* Bottom active indicator line */
+.mood-card-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--card-gradient);
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Hover State ── */
+.mood-card:hover {
+  border-color: color-mix(in srgb, var(--card-color) 50%, transparent);
+  transform: translateY(-6px) scale(1.03);
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.35),
+    0 0 24px color-mix(in srgb, var(--card-color) 15%, transparent);
+}
+
+.mood-card:hover .mood-card-glow {
+  opacity: 0.2;
+}
+
+.mood-card:hover .mood-card-icon {
+  transform: scale(1.15) rotate(-5deg);
+}
+
+.mood-card:hover .mood-card-label {
+  color: #f0f4fa;
+}
+
+.mood-card:hover .mood-card-particles span {
+  opacity: 1;
+}
+
+.mood-card:hover .mood-card-indicator {
+  width: 50%;
+}
+
+/* ── Active State ── */
+.mood-card.active {
+  border-color: color-mix(in srgb, var(--card-color) 65%, transparent);
+  background:
+    radial-gradient(ellipse 120% 120% at 50% -20%, color-mix(in srgb, var(--card-color) 22%, transparent), transparent 60%),
+    rgba(14, 18, 32, 0.88);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    0 0 32px color-mix(in srgb, var(--card-color) 18%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--card-color) 20%, transparent);
+}
+
+.mood-card.active .mood-card-glow {
+  opacity: 0.25;
+  animation: moodGlowPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes moodGlowPulse {
+  0%, 100% { opacity: 0.2; filter: blur(12px); }
+  50% { opacity: 0.35; filter: blur(16px); }
+}
+
+.mood-card.active .mood-card-icon {
+  transform: scale(1.12);
+  animation: moodIconBounce 2s ease-in-out infinite;
+}
+
+@keyframes moodIconBounce {
+  0%, 100% { transform: scale(1.12) translateY(0); }
+  50% { transform: scale(1.12) translateY(-4px); }
+}
+
+.mood-card.active .mood-card-label {
+  color: #fff;
+  text-shadow: 0 0 18px color-mix(in srgb, var(--card-color) 60%, transparent);
+}
+
+.mood-card.active .mood-card-desc {
+  color: #bcc8da;
+}
+
+.mood-card.active .mood-card-particles span {
+  opacity: 1;
+}
+
+.mood-card.active .mood-card-indicator {
+  width: 70%;
+}
+
+/* ── Active Bar (below grid) ── */
+.mood-active-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  z-index: 1;
+}
+
+.mood-active-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: moodDotPulse 1.8s ease-in-out infinite;
+  box-shadow: 0 0 12px currentColor;
+}
+
+@keyframes moodDotPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.7; }
+}
+
+.mood-active-text {
+  font-size: 13px;
+  color: #8fa3bc;
+}
+
+.mood-active-text strong {
+  color: #e8d5b8;
+  font-weight: 700;
+}
+
+/* ── Light Mode Mood Overrides ── */
+body[data-theme="light"] .mood-feed-block {
+  border-color: rgba(162, 104, 51, 0.24);
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 0%, rgba(99, 68, 200, 0.06), transparent 58%),
+    radial-gradient(ellipse 50% 70% at 100% 100%, color-mix(in srgb, var(--mood-color, #f59e0b) 8%, transparent), transparent 60%),
+    linear-gradient(155deg, rgba(255, 250, 242, 0.96), rgba(248, 240, 225, 0.98));
+}
+
+body[data-theme="light"] .mood-feed-header h3 { color: #2a2116; }
+body[data-theme="light"] .mood-feed-header p { color: #675a4b; }
+
+body[data-theme="light"] .mood-card {
+  background:
+    radial-gradient(ellipse 100% 100% at 50% 0%, color-mix(in srgb, var(--card-color) 6%, transparent), transparent 70%),
+    rgba(255, 250, 242, 0.85);
+  border-color: rgba(120, 100, 60, 0.12);
+}
+
+body[data-theme="light"] .mood-card-label { color: #3a3228; }
+body[data-theme="light"] .mood-card-desc { color: #7a6e5e; }
+
+body[data-theme="light"] .mood-card:hover {
+  background:
+    radial-gradient(ellipse 100% 100% at 50% 0%, color-mix(in srgb, var(--card-color) 10%, transparent), transparent 70%),
+    rgba(255, 250, 242, 0.92);
+}
+
+body[data-theme="light"] .mood-card.active {
+  background:
+    radial-gradient(ellipse 120% 120% at 50% -20%, color-mix(in srgb, var(--card-color) 16%, transparent), transparent 60%),
+    rgba(255, 248, 235, 0.95);
+  border-color: color-mix(in srgb, var(--card-color) 45%, transparent);
+}
+
+body[data-theme="light"] .mood-card.active .mood-card-label {
+  color: #1f1a14;
+  text-shadow: none;
+}
+
+body[data-theme="light"] .mood-active-bar {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(120, 100, 60, 0.1);
+}
+
+body[data-theme="light"] .mood-active-text { color: #5c5248; }
+body[data-theme="light"] .mood-active-text strong { color: #3a2e1e; }
+
+/* -- Section wrapper ------------------------------------ */
+.section-wrapper {
+  position: relative;
+  padding: 36px 0 44px;
+  overflow: hidden;
+}
+
+/* Top amber border line shared by all sections */
+.section-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(162,104,51,0.25) 12%,
+    rgba(227,164,88,0.55) 50%,
+    rgba(162,104,51,0.25) 88%,
+    transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── DARK MODE sections ── */
+
+/* Trending: amber left + indigo right top */
+.section-wrapper:has(.trending) {
+  background:
+    radial-gradient(ellipse 55% 100% at -2%  50%,  rgba(180,110, 40,0.50) 0%, transparent 65%),
+    radial-gradient(ellipse 32% 55%  at 104% 12%,  rgba( 90, 40,160,0.30) 0%, transparent 58%),
+    radial-gradient(ellipse 50% 40%  at 55%  108%,  rgba( 20,140,120,0.20) 0%, transparent 52%),
+    rgba(8, 12, 24, 0.75);
+}
+
+/* Motivation: rose top-right + teal bottom-left */
+.section-wrapper:has(.motivation) {
+  background:
+    radial-gradient(ellipse 50% 85% at 106%  3%,  rgba(200, 60,100,0.28) 0%, transparent 62%),
+    radial-gradient(ellipse 48% 75% at  -5% 97%,  rgba( 20,150,130,0.32) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 32% at  50%  50%,  rgba(162,104, 51,0.14) 0%, transparent 58%),
+    rgba(8, 10, 22, 0.78);
+}
+
+/* Recommended: golden top + indigo/violet corners */
+.section-wrapper:has(.recommended) {
+  background:
+    radial-gradient(ellipse 78% 65%  at 50%  -8%,  rgba(200,128, 45,0.40) 0%, transparent 62%),
+    radial-gradient(ellipse 28% 55%  at 96%  88%,  rgba( 80, 40,180,0.26) 0%, transparent 55%),
+    radial-gradient(ellipse 28% 52%  at  4%  84%,  rgba(162, 60,120,0.22) 0%, transparent 52%),
+    rgba(10, 10, 20, 0.76);
+}
+
+/* All Books: amber left + teal right + indigo center */
+.section-wrapper:has(.all) {
+  background:
+    radial-gradient(ellipse 40% 90% at   0% 100%,  rgba(162,104, 51,0.42) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 90% at 100% 100%,  rgba( 20,140,120,0.36) 0%, transparent 60%),
+    radial-gradient(ellipse 65% 42% at  50%  112%,  rgba( 90, 40,160,0.22) 0%, transparent 62%),
+    rgba(7, 10, 20, 0.80);
+}
+
+/* ══ LIGHT MODE section backgrounds ═══════════════════ */
+body[data-theme="light"] .section-wrapper::before {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(127,59,45,0.25) 12%,
+    rgba(162,104,51,0.50) 50%,
+    rgba(127,59,45,0.25) 88%,
+    transparent 100%);
+}
+
+/* Trending: amber + indigo hint */
+body[data-theme="light"] .section-wrapper:has(.trending) {
+  background:
+    radial-gradient(ellipse 55% 100% at -2%  50%,  rgba(162,104, 51,0.40) 0%, transparent 65%),
+    radial-gradient(ellipse 30% 50%  at 104% 15%,  rgba( 80, 40,160,0.18) 0%, transparent 58%),
+    radial-gradient(ellipse 45% 35%  at 58%  105%,  rgba( 20,130,110,0.14) 0%, transparent 52%),
+    rgba(242, 228, 204, 0.82);
+}
+
+/* Motivation: rose top-right + teal bottom-left */
+body[data-theme="light"] .section-wrapper:has(.motivation) {
+  background:
+    radial-gradient(ellipse 48% 80% at 106%  5%,  rgba(180, 50, 90,0.18) 0%, transparent 62%),
+    radial-gradient(ellipse 46% 72% at  -6% 95%,  rgba( 20,140,120,0.20) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 28% at  50%  50%,  rgba(162,104, 51,0.16) 0%, transparent 58%),
+    rgba(242, 230, 210, 0.80);
+}
+
+/* Recommended: amber sunburst + indigo/rose corners */
+body[data-theme="light"] .section-wrapper:has(.recommended) {
+  background:
+    radial-gradient(ellipse 75% 60%  at 50%  -5%,  rgba(200,130, 55,0.38) 0%, transparent 62%),
+    radial-gradient(ellipse 26% 52%  at 96%  86%,  rgba( 80, 40,180,0.16) 0%, transparent 55%),
+    radial-gradient(ellipse 26% 48%  at  4%  82%,  rgba(160, 50,110,0.14) 0%, transparent 52%),
+    rgba(238, 222, 195, 0.82);
+}
+
+/* All Books: amber + teal + indigo */
+body[data-theme="light"] .section-wrapper:has(.all) {
+  background:
+    radial-gradient(ellipse 38% 85% at   0% 100%,  rgba(162,104, 51,0.36) 0%, transparent 60%),
+    radial-gradient(ellipse 38% 85% at 100% 100%,  rgba( 20,140,120,0.28) 0%, transparent 60%),
+    radial-gradient(ellipse 62% 38% at  50%  108%,  rgba( 90, 40,160,0.18) 0%, transparent 62%),
+    rgba(240, 226, 200, 0.80);
+}
+
+/* -- Book card hover effects — let scroll-item handle transforms -- */
+.home-container :is(.book-card, .scroll-item, .book-item) {
+  cursor: pointer;
+}
+
+/* -- Scrollbar ------------------------------------------ */
+.home-container ::-webkit-scrollbar { height: 3px; }
+.home-container ::-webkit-scrollbar-track { background: transparent; }
+.home-container ::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius: 99px;
+}
+
+/* -- Mobile --------------------------------------------- */
+@media (max-width: 768px) {
+  .home-container { padding: 12px 14px 40px 14px; }
+  .section-title { font-size: 16px !important; letter-spacing: 1px !important; }
+  .xp-strip { grid-template-columns: repeat(2, 1fr); padding: 8px 0 8px; gap: 10px; }
+  .xp-card.mood-state { grid-column: span 2; }
+  .mood-feed-block { margin: 8px 0 10px; padding: 18px 14px 14px; }
+  .xp-card { padding: 13px 14px; }
+  .xp-value { font-size: 25px; }
+  .mood-feed-header h3 { font-size: 20px; }
+  .mood-selector-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .mood-card { padding: 16px 10px 14px; }
+  .mood-card-icon { font-size: 26px; }
+  .mood-card-desc { font-size: 10px; }
+}
+
+@media (max-width: 600px) {
+  .section-wrapper { padding: 24px 0 32px; }
+  .error-card, .empty-card { padding: 32px 28px; border-radius: 18px; }
+  .home-wave { height: 50px; }
+}
+
+@media (max-width: 480px) {
+  .home-container { padding: 8px 0 32px 0; }
+  .mood-selector-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .mood-card { padding: 14px 8px 12px; border-radius: 12px; }
+  .mood-card-icon { font-size: 22px; }
+  .mood-card-label { font-size: 12px; }
+  .mood-card-desc { font-size: 9px; max-width: 110px; }
+  .mood-feed-block { padding: 14px 10px 12px; border-radius: 14px; margin: 6px 10px 10px; }
+  .mood-feed-header h3 { font-size: 17px; }
+  .mood-feed-header p { font-size: 11px; }
+  .mood-active-bar { padding: 8px 10px; gap: 8px; }
+  .mood-active-text { font-size: 11px; }
+  .xp-card { padding: 10px 12px; border-radius: 12px; }
+  .xp-value { font-size: 22px; }
+  .xp-title { font-size: 10px; }
+  .xp-sub { font-size: 11px; }
+  .section-wrapper { padding: 18px 0 24px; }
+  .error-card, .empty-card { padding: 24px 18px; }
+}
+/* -- Reduced motion ------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .loading-orb, .loading-rings span { animation: none !important; }
+  .home-container :is(.book-card, .scroll-item, .book-item) { transition: none !important; }
+  .mood-card, .mood-card-icon, .mood-card-glow, .mood-card-particles span,
+  .mood-active-dot, .mood-feed-block::before, .mood-feed-block::after { animation: none !important; }
+}
