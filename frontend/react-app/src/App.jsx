@@ -29,6 +29,7 @@ import ReadBook from "./pages/ReadBook";
 import ReadingHistory from "./pages/ReadingHistory";
 import MyLibrary from "./pages/MyLibrary";
 import Onboarding from "./pages/Onboarding";
+import LandingPage from "./landing/LandingPage";
 
 export default function App() {
   /* Scroll to top on every route change */
@@ -40,13 +41,15 @@ export default function App() {
 
   function AppContent() {
     const location = useLocation();
-    const hideNavbar = location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/onboarding" || location.pathname.startsWith("/read/");
+    const hideNavbar = location.pathname === "/" || location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/onboarding" || location.pathname.startsWith("/read/");
 
     return (
       <div className="app">
         {!hideNavbar && <Navbar />}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/app" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/onboarding" element={<Onboarding />} />

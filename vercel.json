@@ -1,7 +1,7 @@
 {
-  "buildCommand": "cd frontend/explore/GSAP-Awwwards-Website-main/GSAP-Awwwards-Website-main && npm install && npm run build",
-  "outputDirectory": "frontend/explore/GSAP-Awwwards-Website-main/GSAP-Awwwards-Website-main/dist",
-  "installCommand": "cd frontend/explore/GSAP-Awwwards-Website-main/GSAP-Awwwards-Website-main && npm install",
+  "buildCommand": "cd frontend/react-app && npm install && npm run build",
+  "outputDirectory": "frontend/react-app/dist",
+  "installCommand": "cd frontend/react-app && npm install",
   "framework": "vite",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
