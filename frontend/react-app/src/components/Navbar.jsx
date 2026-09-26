@@ -170,7 +170,6 @@ export default function Navbar() {
 
         <ul className="nav-menu" role="menubar">
           <li className="nav-item"><Link to="/" className="nav-link simple" role="menuitem">Browse</Link></li>
-          <li className="nav-item"><Link to="/explore" className="nav-link simple" role="menuitem">Explore</Link></li>
 
           <li className="nav-item dropdown" role="menuitem" aria-haspopup="true">
             <Link to="/categories" className="nav-link simple">Categories ▾</Link>

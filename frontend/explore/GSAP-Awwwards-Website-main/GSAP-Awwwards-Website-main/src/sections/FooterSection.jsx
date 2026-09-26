@@ -52,7 +52,7 @@ const FooterSection = () => {
       <div className="2xl:h-[110dvh] relative md:pt-[20vh] pt-[10vh]">
         <div className="overflow-hidden z-10">
           <h1 className="general-title text-center text-milk py-5">
-            #READWITHREADIFY
+            #CHUGASPYLT
           </h1>
         </div>
 
@@ -87,29 +87,26 @@ const FooterSection = () => {
         <div className="mt-40 md:px-10 px-5 flex gap-10 md:flex-row flex-col justify-between text-milk font-paragraph md:text-lg font-medium">
           <div className="flex items-center md:gap-16 gap-5">
             <div>
-              <p>Readify Catalog</p>
+              <p>SPYLT Flavors</p>
             </div>
             <div>
-              <p>Book Clubs</p>
-              <p>Student Access</p>
-              <p>Library Partners</p>
+              <p>Chug Club</p>
+              <p>Student Discount</p>
+              <p>Store Locator</p>
             </div>
             <div>
-              <p>Company</p>
-              <p>Support</p>
-              <p>Reader Stories</p>
+              <p>About Us</p>
+              <p>Contact Us</p>
+              <p>FAQ</p>
             </div>
           </div>
 
           <div className="md:max-w-lg">
             <p>
-              Get early access to featured collections, reading events, and
-              personalized recommendations.
+              Subscribe to get special offers, free giveaways, and
+              once-in-a-lifetime deals.
             </p>
             <div className="flex justify-between items-center border-b border-[#D9D9D9] py-5 md:mt-10">
-              {/* The input field and arrow icon for newsletter signup. */}{" "}
-              {/* A
-          border at the bottom for a clean, modern look. */}
               <input
                 type="email"
                 placeholder="Enter your email"
@@ -121,8 +118,7 @@ const FooterSection = () => {
         </div>
 
         <div className="copyright-box">
-          {/* The final row with copyright and legal links. */}
-          <p>Copyright © 2026 Readify - All Rights Reserved</p>
+          <p>Copyright © 2025 SPYLT - All Rights Reserved</p>
           <div className="flex items-center gap-7">
             <p>Privacy Policy</p>
             <p>Terms of Service</p>

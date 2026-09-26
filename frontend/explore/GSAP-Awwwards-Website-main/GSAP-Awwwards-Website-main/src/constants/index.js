@@ -1,91 +1,89 @@
-const VIDEO_VERSION = "20260316-2";
-
 const flavorlists = [
   {
-    name: "New Releases",
+    name: "Chocolate Milk",
     color: "brown",
     rotation: "md:rotate-[-8deg] rotate-0",
   },
   {
-    name: "Award Winners",
+    name: "Stawberry Milk",
     color: "red",
     rotation: "md:rotate-[8deg] rotate-0",
   },
   {
-    name: "Mystery and Crime",
+    name: "Cookies & Cream",
     color: "blue",
     rotation: "md:rotate-[-8deg] rotate-0",
   },
   {
-    name: "Sci-Fi and Fantasy",
+    name: "Peanut Butter Chocolate",
     color: "orange",
     rotation: "md:rotate-[8deg] rotate-0",
   },
   {
-    name: "Student Essentials",
+    name: "Vanilla Milkshake",
     color: "white",
     rotation: "md:rotate-[-8deg] rotate-0",
   },
   {
-    name: "Audiobook Picks",
+    name: "Max Chocolate Milk",
     color: "black",
     rotation: "md:rotate-[8deg] rotate-0",
   },
 ];
 
 const nutrientLists = [
-  { label: "Digital Titles", amount: "245K" },
-  { label: "Audiobooks", amount: "50K" },
-  { label: "Active Readers", amount: "176K" },
-  { label: "Daily Borrows", amount: "5K" },
-  { label: "Partner Libraries", amount: "120" },
+  { label: "Potassium", amount: "245mg" },
+  { label: "Calcium", amount: "500mg" },
+  { label: "Vitamin A", amount: "176mcg" },
+  { label: "Vitamin D", amount: "5mcg" },
+  { label: "Iron", amount: "1mg" },
 ];
 
 const cards = [
   {
-    src: `/videos/f1.mp4?v=${VIDEO_VERSION}`,
+    src: "/videos/f1.mp4",
     rotation: "rotate-z-[-10deg]",
-    name: "Ariana",
+    name: "Madison",
     img: "/images/p1.png",
     translation: "translate-y-[-5%]",
   },
   {
-    src: `/videos/f2.mp4?v=${VIDEO_VERSION}`,
+    src: "/videos/f2.mp4",
     rotation: "rotate-z-[4deg]",
-    name: "Liam",
+    name: "Alexander",
     img: "/images/p2.png",
   },
   {
-    src: `/videos/f3.mp4?v=${VIDEO_VERSION}`,
+    src: "/videos/f3.mp4",
     rotation: "rotate-z-[-4deg]",
-    name: "Sophia",
+    name: "Andrew",
     img: "/images/p3.png",
     translation: "translate-y-[-5%]",
   },
   {
-    src: `/videos/f4.mp4?v=${VIDEO_VERSION}`,
+    src: "/videos/f4.mp4",
     rotation: "rotate-z-[4deg]",
-    name: "Noah",
+    name: "Bryan",
     img: "/images/p4.png",
     translation: "translate-y-[5%]",
   },
   {
-    src: `/videos/f5.mp4?v=${VIDEO_VERSION}`,
+    src: "/videos/f5.mp4",
     rotation: "rotate-z-[-10deg]",
-    name: "Mia",
+    name: "Chris",
     img: "/images/p5.png",
   },
   {
-    src: `/videos/f6.mp4?v=${VIDEO_VERSION}`,
+    src: "/videos/f6.mp4",
     rotation: "rotate-z-[4deg]",
-    name: "Ethan",
+    name: "Devante",
     img: "/images/p6.png",
     translation: "translate-y-[5%]",
   },
   {
-    src: `/videos/f7.mp4?v=${VIDEO_VERSION}`,
+    src: "/videos/f7.mp4",
     rotation: "rotate-z-[-3deg]",
-    name: "Isabella",
+    name: "Melisa",
     img: "/images/p7.png",
     translation: "translate-y-[10%]",
   },

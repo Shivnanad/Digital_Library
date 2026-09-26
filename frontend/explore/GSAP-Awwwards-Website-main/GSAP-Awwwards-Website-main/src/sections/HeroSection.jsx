@@ -9,12 +9,8 @@ const ASSET_VERSION = "20260316-2";
 const HeroSection = ({ onIntroComplete = () => {}, isIntroComplete = false }) => {
   const videoRef = useRef(null);
 
-  const handleEnterLibrary = () => {
-    const libraryUrl = import.meta.env.VITE_LIBRARY_URL || "http://localhost:5173/";
-    window.location.href = libraryUrl;
-  };
-
   const isMobile = useMediaQuery({
+
     query: "(max-width: 768px)",
   });
 
@@ -124,9 +120,9 @@ const HeroSection = ({ onIntroComplete = () => {}, isIntroComplete = false }) =>
             className="absolute inset-0 w-full h-full object-cover z-0"
           />
         )}
-        <div className="hero-content opacity-0 relative z-10">
+        <div className="hero-content opacity-0">
           <div className="overflow-hidden">
-            <h1 className="hero-title whitespace-nowrap">Read Anywhere</h1>
+            <h1 className="hero-title">Freaking Delicious</h1>
           </div>
           <div
             style={{
@@ -135,28 +131,17 @@ const HeroSection = ({ onIntroComplete = () => {}, isIntroComplete = false }) =>
             className="hero-text-scroll"
           >
             <div className="hero-subtitle">
-              <h1>Books + Audiobooks</h1>
+              <h1>Protein + Energy</h1>
             </div>
           </div>
 
           <h2>
-            Discover your next favorite story with Readify and enjoy curated
-            digital shelves for every mood, age, and interest.
+            Live life to the fullest with SPYLT: Shatter boredom and embrace
+            every delicious drop of chocolatey goodness.
           </h2>
 
-          <div
-            className="hero-button"
-            role="button"
-            tabIndex={0}
-            onClick={handleEnterLibrary}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                handleEnterLibrary();
-              }
-            }}
-          >
-            <p>Enter Library</p>
+          <div className="hero-button">
+            <p>Chug a Spylt</p>
           </div>
         </div>
       </div>

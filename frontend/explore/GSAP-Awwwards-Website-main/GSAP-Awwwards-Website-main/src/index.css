@@ -62,26 +62,23 @@ body::-webkit-scrollbar {
 
   .hero-container {
     @apply relative bg-milk w-screen h-dvh overflow-hidden;
-    background-image: url("/images/hero-bg.png");
-    background-size: cover;
-    background-position: center;
 
     .hero-content {
       @apply relative z-10 w-full h-full flex flex-col 2xl:justify-center items-center translate-y-10 2xl:pt-0 md:pt-32 pt-24;
 
       .hero-title {
-        @apply text-dark-brown 2xl:text-[7.5rem] xl:text-[6rem] lg:text-[4.5rem] md:text-[3.8rem] text-[2.4rem] font-bold uppercase leading-tight tracking-tight 2xl:mb-2 mb-4 whitespace-nowrap;
+        @apply text-dark-brown 2xl:text-[8.5rem] md:text-[6.5rem] text-[3.3rem] font-bold uppercase leading-[9vw] tracking-[-.35vw] 2xl:mb-0 mb-5;
       }
 
       .hero-text-scroll {
-        @apply rotate-[-2deg] mb-6 border-[.4vw] border-milk whitespace-nowrap max-w-[92vw] mx-auto shadow-xl;
+        @apply rotate-[-3deg] mb-8 border-[.5vw] border-milk;
 
         .hero-subtitle {
-          @apply bg-mid-brown px-4 py-1;
+          @apply bg-mid-brown;
         }
 
         h1 {
-          @apply uppercase 2xl:text-[5.5rem] xl:text-[4.5rem] lg:text-[3.6rem] md:text-[2.8rem] text-[1.6rem] font-bold text-[#fce1cd] leading-tight tracking-tight 2xl:px-[1.2vw] px-4 2xl:py-[0.5vw] py-2 whitespace-nowrap text-center;
+          @apply uppercase 2xl:text-[8.5rem] md:text-[6.5rem] text-[3.3rem] font-bold text-[#fce1cd] leading-[9vw] tracking-[-.35vw] 2xl:px-[1.2vw] px-3 2xl:pb-[1vw] pb-5 2xl:py-0 py-3;
         }
       }
 
@@ -90,7 +87,7 @@ body::-webkit-scrollbar {
       }
 
       .hero-button {
-        @apply md:mt-16 mt-10 text-dark-brown bg-light-brown uppercase font-bold text-lg rounded-full md:p-5 p-3 md:px-16 px-10 cursor-pointer z-50;
+        @apply md:mt-16 mt-10 text-dark-brown bg-light-brown uppercase font-bold text-lg rounded-full md:p-5 p-3 md:px-16 px-10;
       }
     }
   }
