@@ -1,7 +1,8 @@
 // Voice Service — calls backend to process commands via Ollama AI
 import { OLLAMA_CONFIG } from '../config/voiceConfig';
 
-const API_BASE = 'http://localhost:5000/api';
+import { API_BASE } from '../config/api.js';
+const API_BASE_URL = API_BASE;
 
 /**
  * Send transcript (and optional history) to backend for AI processing
@@ -20,13 +21,13 @@ export const processVoiceCommand = async (input) => {
     delete payload.history;
   }
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
 
   // Try up to RETRY_LIMIT times
   let lastError;
   for (let attempt = 1; attempt <= OLLAMA_CONFIG.RETRY_LIMIT; attempt++) {
     try {
-      const res = await fetch(`${API_BASE}/voice/process`, {
+      const res = await fetch(`${API_BASE_URL}/voice/process`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

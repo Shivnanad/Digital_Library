@@ -5,25 +5,27 @@ const API = `${API_BASE}/auth`;
 
 export const loginUser = async (data) => {
   try {
-    const res = await axios.post(`${API}/login`, data);
+    const res = await axios.post(`${API}/login`, data, { timeout: 15000 });
     localStorage.setItem("token", res.data.token);
     return res.data;
   } catch (err) {
-    throw err.response.data.message;
+    const message = err?.response?.data?.message || err?.message || "Login failed. Please try again.";
+    throw message;
   }
 };
 
 export const registerUser = async (data) => {
   try {
-    const res = await axios.post(`${API}/register`, data);
+    const res = await axios.post(`${API}/register`, data, { timeout: 15000 });
     return res.data;
   } catch (err) {
-    throw err.response.data.message;
+    const message = err?.response?.data?.message || err?.message || "Registration failed. Please try again.";
+    throw message;
   }
 };
 
 export const uploadProfilePic = async (file) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
   const formData = new FormData();
   formData.append("profilePic", file);
   const res = await axios.put(`${API}/profile-pic`, formData, {
@@ -31,64 +33,66 @@ export const uploadProfilePic = async (file) => {
       Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",
     },
+    timeout: 30000,
   });
   return res.data;
 };
 
 export const removeProfilePic = async () => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
   const res = await axios.delete(`${API}/profile-pic`, {
     headers: { Authorization: `Bearer ${token}` },
+    timeout: 15000,
   });
   return res.data;
 };
 
 export const sendPasswordChangeOtp = async () => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
   const res = await axios.post(
     `${API}/password-change/send-otp`,
     {},
-    { headers: { Authorization: `Bearer ${token}` } }
+    { headers: { Authorization: `Bearer ${token}` }, timeout: 30000 }
   );
   return res.data;
 };
 
 export const verifyPasswordChangeOtp = async (otp) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
   const res = await axios.post(
     `${API}/password-change/verify-otp`,
     { otp },
-    { headers: { Authorization: `Bearer ${token}` } }
+    { headers: { Authorization: `Bearer ${token}` }, timeout: 15000 }
   );
   return res.data;
 };
 
 export const updatePasswordWithOtp = async (newPassword) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
   const res = await axios.post(
     `${API}/password-change/update`,
     { newPassword },
-    { headers: { Authorization: `Bearer ${token}` } }
+    { headers: { Authorization: `Bearer ${token}` }, timeout: 15000 }
   );
   return res.data;
 };
 
 export const completeOnboarding = async () => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
   const res = await axios.post(
     `${API}/complete-onboarding`,
     {},
-    { headers: { Authorization: `Bearer ${token}` } }
+    { headers: { Authorization: `Bearer ${token}` }, timeout: 15000 }
   );
   return res.data;
 };
 
 export const savePreferences = async (data) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
   const res = await axios.post(
     `${API}/save-preferences`,
     data,
-    { headers: { Authorization: `Bearer ${token}` } }
+    { headers: { Authorization: `Bearer ${token}` }, timeout: 15000 }
   );
   return res.data;
 };

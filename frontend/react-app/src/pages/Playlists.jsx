@@ -10,6 +10,7 @@ import {
   removeBookFromPlaylist,
 } from "../services/playlistService";
 import { fetchBooks } from "../services/bookService";
+import { BACKEND_URL } from "../config/api";
 import "../styles/playlists.css";
 
 /* ─── helpers ─── */
@@ -224,8 +225,8 @@ export default function Playlists() {
 
   /* ─── book cover helper ─── */
   const bookCover = (book) => {
-    if (book.coverUrl && !book.coverUrl.startsWith("/placeholder")) return book.coverUrl.startsWith("http") ? book.coverUrl : `http://localhost:5000${book.coverUrl}`;
-    if (book._id) return `http://localhost:5000/covers/${book._id}.jpg`;
+    if (book.coverUrl && !book.coverUrl.startsWith("/placeholder")) return book.coverUrl.startsWith("http") ? book.coverUrl : `${BACKEND_URL}${book.coverUrl}`;
+    if (book._id) return `${BACKEND_URL}/covers/${book._id}.jpg`;
     return null;
   };
 

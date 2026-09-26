@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../services/authService";
 import { useAuth } from "../context/AuthContext";
+import { API_BASE } from "../config/api";
 import "../styles/auth.css";
 
 export default function Login() {
@@ -12,6 +13,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [rememberMe, setRememberMe] = useState(true);
 
   /* ── OTP state ── */
   const [step, setStep] = useState("credentials"); // "credentials" | "otp"
@@ -27,11 +29,15 @@ export default function Login() {
     setError("");
     try {
       // Send OTP to email via backend
-      const response = await fetch('http://localhost:5000/api/otp/send-otp', {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      const response = await fetch(`${API_BASE}/otp/send-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim() })
+        body: JSON.stringify({ email: email.trim() }),
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
       const data = await response.json();
       if (!response.ok || !data.success) {
         setError(data.message || 'Failed to send OTP. Please try again.');
@@ -81,19 +87,23 @@ export default function Login() {
     setError("");
     try {
       // Verify OTP with backend
-      const response = await fetch('http://localhost:5000/api/otp/verify-otp', {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+      const response = await fetch(`${API_BASE}/otp/verify-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), otp: entered })
+        body: JSON.stringify({ email: email.trim(), otp: entered }),
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
       const data = await response.json();
       if (!response.ok || !data.success) {
         setError(data.message || 'Invalid OTP. Please try again.');
         return;
       }
       // OTP verified, now login with email and password
-      const loginData = await loginUser({ email: email.trim(), password });
-      login(loginData.user, loginData.token);
+      const loginData = await loginUser({ email: email.trim(), password, rememberMe });
+      login(loginData.user, loginData.token, rememberMe);
       // If first-time user (onboarding not completed), go to onboarding
       if (loginData.user && loginData.user.onboardingCompleted === false) {
         navigate("/onboarding");
@@ -318,6 +328,17 @@ export default function Login() {
                   >
                     <i className={`fas fa-eye${showPassword ? "-slash" : ""}`} />
                   </button>
+                </div>
+
+                <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-start' }}>
+                  <input
+                    type="checkbox"
+                    id="rememberMe"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    style={{ width: '16px', height: '16px', accentColor: '#7c5cfc', cursor: 'pointer' }}
+                  />
+                  <label htmlFor="rememberMe" style={{ fontSize: '13px', color: '#94a3b8', cursor: 'pointer', userSelect: 'none' }}>Remember Me</label>
                 </div>
 
                 <button className="login-button" type="submit">Send OTP</button>

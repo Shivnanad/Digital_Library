@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { API_BASE as CONFIG_API_BASE } from '../config/api.js';
 
-const API_BASE = 'http://localhost:5000/api/ai';
+const API_BASE = `${CONFIG_API_BASE}/ai`;
 
 // Chat with AI about the book
 export const chatWithAI = async (question, bookTitle, bookAuthor, context) => {

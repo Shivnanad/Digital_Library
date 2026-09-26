@@ -6,10 +6,11 @@ import { fetchBookById, fetchBooks } from "../services/bookService";
 import { addToCart } from "../services/cartService";
 import { checkBookPurchased } from "../services/orderService";
 import { getPlaylists, addBookToPlaylist, createPlaylist } from "../services/playlistService";
+import { API_BASE, BACKEND_URL } from "../config/api";
 import BookCard from "../components/BookCard";
 import "../styles/bookDetails.css";
 
-const API = "http://localhost:5000/api";
+const API = API_BASE;
 
 // Interactive Star Picker (for the review form)
 function StarPicker({ value, onChange, size = "large" }) {
@@ -177,7 +178,7 @@ export default function BookDetails() {
     if (!newText.trim()) { setSubmitError("Please write your review."); return; }
     try {
       setSubmitting(true);
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token") || sessionStorage.getItem("token");
       const res = await fetch(`${API}/books/${id}/reviews`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },

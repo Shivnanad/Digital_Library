@@ -41,15 +41,16 @@ export default function App() {
 
   function AppContent() {
     const location = useLocation();
-    const hideNavbar = location.pathname === "/" || location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/onboarding" || location.pathname.startsWith("/read/");
+    const hideNavbar = location.pathname === "/explore" || location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/onboarding" || location.pathname.startsWith("/read/");
 
     return (
       <div className="app">
         {!hideNavbar && <Navbar />}
         <Routes>
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<Home />} />
           <Route path="/app" element={<Home />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/explore" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/onboarding" element={<Onboarding />} />
@@ -69,12 +70,12 @@ export default function App() {
           <Route path="/read/:id" element={<ReadBook />} />
 
           {/* Admin routes (protected) */}
-          <Route path="/admin" element={<RequireAuth><AdminDashboard/></RequireAuth>} />
-          <Route path="/admin/books" element={<RequireAuth><AdminBooks/></RequireAuth>} />
-          <Route path="/admin/books/:id" element={<RequireAuth><AdminBookEdit/></RequireAuth>} />
-          <Route path="/admin/users" element={<RequireAuth><AdminPanel/></RequireAuth>} />
-          <Route path="/admin/panel" element={<RequireAuth><AdminPanel/></RequireAuth>} />
-          <Route path="/user/panel" element={<RequireAuthUser><UserPanel/></RequireAuthUser>} />
+          <Route path="/admin" element={<RequireAuth><AdminDashboard /></RequireAuth>} />
+          <Route path="/admin/books" element={<RequireAuth><AdminBooks /></RequireAuth>} />
+          <Route path="/admin/books/:id" element={<RequireAuth><AdminBookEdit /></RequireAuth>} />
+          <Route path="/admin/users" element={<RequireAuth><AdminPanel /></RequireAuth>} />
+          <Route path="/admin/panel" element={<RequireAuth><AdminPanel /></RequireAuth>} />
+          <Route path="/user/panel" element={<RequireAuthUser><UserPanel /></RequireAuthUser>} />
         </Routes>
       </div>
     );

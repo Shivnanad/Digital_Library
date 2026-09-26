@@ -336,7 +336,7 @@ Return at most 10 titles. Return valid JSON only, like: ["Title1","Title2"]`;
           temperature: 0.3,
           max_tokens: 300,
           stream: false
-        }, { timeout: 15000 });
+        }, { timeout: 5000 });
 
         const aiText = (aiRes.data?.choices?.[0]?.message?.content || "").trim();
         // Extract JSON array from AI response

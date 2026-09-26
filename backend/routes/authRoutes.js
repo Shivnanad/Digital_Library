@@ -93,10 +93,14 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
+    // "Remember Me" → 30 days; otherwise → 1 day
+    const rememberMe = req.body.rememberMe !== false;
+    const tokenExpiry = rememberMe ? "30d" : "1d";
+
     const token = jwt.sign(
-      { id: user._id },
+      { id: user._id, role: user.role },
       process.env.JWT_SECRET || "secretkey",
-      { expiresIn: "7d" }
+      { expiresIn: tokenExpiry }
     );
 
     // Determine if this user should see onboarding.
@@ -308,6 +312,50 @@ router.post("/complete-onboarding", requireAuth, async (req, res) => {
   } catch (err) {
     console.error("complete-onboarding error:", err);
     res.status(500).json({ message: "Failed to complete onboarding" });
+  }
+});
+
+/* ── VALIDATE TOKEN / GET CURRENT USER ── */
+router.get("/me", requireAuth, async (req, res) => {
+  try {
+    res.json({
+      _id: req.user._id,
+      name: req.user.name,
+      email: req.user.email,
+      role: req.user.role,
+      profilePic: req.user.profilePic || null,
+      onboardingCompleted: req.user.onboardingCompleted || false,
+    });
+  } catch (err) {
+    console.error("auth/me error:", err);
+    res.status(500).json({ message: "Failed to validate session" });
+  }
+});
+
+/* ── REFRESH TOKEN ── */
+router.post("/refresh", requireAuth, async (req, res) => {
+  try {
+    // Issue a fresh token with the same expiry policy
+    const token = jwt.sign(
+      { id: req.user._id, role: req.user.role },
+      process.env.JWT_SECRET || "secretkey",
+      { expiresIn: "30d" }
+    );
+
+    res.json({
+      token,
+      user: {
+        _id: req.user._id,
+        name: req.user.name,
+        email: req.user.email,
+        role: req.user.role,
+        profilePic: req.user.profilePic || null,
+        onboardingCompleted: req.user.onboardingCompleted || false,
+      },
+    });
+  } catch (err) {
+    console.error("auth/refresh error:", err);
+    res.status(500).json({ message: "Failed to refresh token" });
   }
 });
 

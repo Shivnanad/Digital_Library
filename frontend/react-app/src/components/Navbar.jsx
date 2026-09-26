@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from "react";
 import { getCart, onCartUpdate } from "../services/cartService";
 import { searchBooks } from "../services/bookService";
 import { useVoice } from "../context/VoiceContext";
+import { BACKEND_URL } from "../config/api";
 import "../styles/navbar.css";
 
 export default function Navbar() {
@@ -14,13 +15,14 @@ export default function Navbar() {
   const voice = useVoice();
   const location = useLocation();
   const isSearchPage = location.pathname === "/search";
-  const isHomePage = location.pathname === "/";
+  const isHomePage = location.pathname === "/" || location.pathname === "/app" || location.pathname === "/home";
 
   const [search, setSearch] = useState("");
   const [cartCount, setCartCount] = useState(0);
   const [suggestions, setSuggestions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [debounceTimer, setDebounceTimer] = useState(null);
+  const debounceRef = useRef(null);
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef(null);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -113,7 +115,7 @@ export default function Navbar() {
 
   const handleVoiceSearch = () => {
     if (!recognitionRef.current) return;
-    
+
     if (isListening) {
       recognitionRef.current.stop();
       setIsListening(false);
@@ -136,9 +138,9 @@ export default function Navbar() {
 
   // debounce search suggestions
   useEffect(() => {
-    if (debounceTimer) clearTimeout(debounceTimer);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
     if (!search || !search.trim()) { setSuggestions([]); setShowDropdown(false); return; }
-    const t = setTimeout(async () => {
+    debounceRef.current = setTimeout(async () => {
       try {
         const results = await searchBooks(search.trim(), 6);
         setSuggestions(results || []);
@@ -148,19 +150,18 @@ export default function Navbar() {
         setShowDropdown(false);
       }
     }, 250);
-    setDebounceTimer(t);
-    return () => clearTimeout(t);
+    return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
   }, [search]);
 
   return (
     <nav className={`navbar${(isScrolled || !isHomePage) ? " scrolled" : ""}`}>
       <div className="nav-left">
-        <Link to="/app" className="logo">
+        <Link to="/" className="logo">
           <svg className="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-            <line x1="8" y1="7" x2="16" y2="7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-            <line x1="8" y1="11" x2="13" y2="11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            <line x1="8" y1="7" x2="16" y2="7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+            <line x1="8" y1="11" x2="13" y2="11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
           </svg>
           <div className="logo-wordmark">
             <span className="logo-title">Readify</span>
@@ -168,8 +169,8 @@ export default function Navbar() {
         </Link>
 
         <ul className="nav-menu" role="menubar">
-          <li className="nav-item"><Link to="/" className="nav-link simple" role="menuitem">Explore</Link></li>
-          <li className="nav-item"><Link to="/app" className="nav-link simple" role="menuitem">Browse</Link></li>
+          <li className="nav-item"><Link to="/" className="nav-link simple" role="menuitem">Browse</Link></li>
+          <li className="nav-item"><Link to="/explore" className="nav-link simple" role="menuitem">Explore</Link></li>
 
           <li className="nav-item dropdown" role="menuitem" aria-haspopup="true">
             <Link to="/categories" className="nav-link simple">Categories ▾</Link>
@@ -198,7 +199,7 @@ export default function Navbar() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onFocus={() => { if (suggestions.length) setShowDropdown(true); }}
-            onBlur={() => { setTimeout(()=>setShowDropdown(false), 150); }}
+            onBlur={() => { setTimeout(() => setShowDropdown(false), 150); }}
             aria-label="Search books"
           />
           <button
@@ -267,7 +268,7 @@ export default function Navbar() {
         {/* Profile link — shows pic or generic icon */}
         <Link to="/account" className="nav-link profile-link" aria-label="Account">
           {user?.profilePic ? (
-            <img src={`http://localhost:5000${user.profilePic}`} alt="" className="nav-avatar-img" />
+            <img src={`${BACKEND_URL}${user.profilePic}`} alt="" className="nav-avatar-img" />
           ) : (
             <i className="fas fa-user"></i>
           )}

@@ -3,17 +3,16 @@ import gsap from "gsap";
 import { SplitText } from "gsap/all";
 import { useMediaQuery } from "react-responsive";
 import { useEffect, useRef, useState } from "react";
-
 import { useNavigate } from "react-router-dom";
 
 const ASSET_VERSION = "20260316-2";
 
-const HeroSection = ({ onIntroComplete = () => {}, isIntroComplete = false }) => {
+const HeroSection = ({ onIntroComplete = () => { }, isIntroComplete = false }) => {
   const videoRef = useRef(null);
   const navigate = useNavigate();
 
   const handleEnterLibrary = () => {
-    navigate("/app");
+    navigate("/");
   };
 
   const isMobile = useMediaQuery({

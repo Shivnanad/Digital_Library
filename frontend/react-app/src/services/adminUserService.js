@@ -1,10 +1,10 @@
 import axios from 'axios';
+import { API_BASE as CONFIGURED_API } from '../config/api.js';
 
-const API = import.meta.env.VITE_API_BASE || 'http://localhost:5000/api';
-const API_BASE = API.replace(/\/$/, '');
+const API_BASE = CONFIGURED_API;
 
 const getAuthHeaders = () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 

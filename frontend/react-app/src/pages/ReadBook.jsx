@@ -4,10 +4,11 @@ import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { fetchBookById } from "../services/bookService";
 import { checkBookPurchased } from "../services/orderService";
+import { API_BASE, BACKEND_URL } from "../config/api";
 import "../styles/readBook.css";
 
-const API = "http://localhost:5000/api";
-const BACKEND = "http://localhost:5000";
+const API = API_BASE;
+const BACKEND = BACKEND_URL;
 
 /* Normalise pdfUrl to a full URL */
 function resolvePdf(pdfUrl) {
@@ -22,8 +23,8 @@ async function sendChatMessage(messages, bookTitle) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...(localStorage.getItem("token")
-        ? { Authorization: `Bearer ${localStorage.getItem("token")}` }
+      ...((localStorage.getItem("token") || sessionStorage.getItem("token"))
+        ? { Authorization: `Bearer ${localStorage.getItem("token") || sessionStorage.getItem("token")}` }
         : {}),
     },
     body: JSON.stringify({ messages, bookTitle }),

@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useXp } from "../context/XpContext";
 import { useTheme } from "../context/ThemeContext";
 import { io } from "socket.io-client";
+import { SOCKET_URL } from "../config/api";
 import HeroBanner from "../components/HeroBanner";
 import HorizontalScrollRow from "../components/HorizontalScrollRow";
 import Footer from "../components/Footer";
@@ -87,7 +88,7 @@ export default function Home() {
 
     loadBooks();
 
-    const socket = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:5000");
+    const socket = io(SOCKET_URL);
     socket.on("books:changed", () => {
       loadBooks();
     });
@@ -115,7 +116,7 @@ export default function Home() {
       }
     };
 
-    const intervalId = setInterval(syncReadProgress, 3000);
+    const intervalId = setInterval(syncReadProgress, 15000);
     const onStorage = (event) => {
       if (event.key && event.key !== `readBooks_${email}`) return;
       syncReadProgress();

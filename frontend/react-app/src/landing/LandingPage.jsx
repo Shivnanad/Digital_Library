@@ -97,15 +97,31 @@ const LandingPage = () => {
     }
   }, [isIntroComplete]);
 
+  // Clean up GSAP instances when navigating away from LandingPage
+  useEffect(() => {
+    return () => {
+      const smoother = ScrollSmoother.get();
+      if (smoother) {
+        smoother.kill();
+      }
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      document.body.style.overflow = "";
+      document.body.style.height = "";
+      document.documentElement.style.overflow = "";
+      document.documentElement.style.height = "";
+    };
+  }, []);
+
+
   return (
     <main className="landing-page-root">
       <NavBar />
       <TopButton />
       <div id="smooth-wrapper">
         <div id="smooth-content">
-          <HeroSection 
-            onIntroComplete={() => setIsIntroComplete(true)} 
-            isIntroComplete={isIntroComplete} 
+          <HeroSection
+            onIntroComplete={() => setIsIntroComplete(true)}
+            isIntroComplete={isIntroComplete}
           />
           <MessageSection />
           <FlavorSection />
@@ -124,3 +140,4 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+

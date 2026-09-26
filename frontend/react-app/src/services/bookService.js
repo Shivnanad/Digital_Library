@@ -137,14 +137,18 @@ export async function fetchBooks({ force = false } = {}) {
     }
 
     inFlightBooksRequest = (async () => {
-    // Request a large limit so frontend receives all books when available
-    const url = `${API_URL}?page=1&limit=10000`;
+    // Request books with reasonable limit for frontend cache
+    const url = `${API_URL}?page=1&limit=500`;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
     const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
+      signal: controller.signal,
     });
+    clearTimeout(timeoutId);
     
     if (!res.ok) {
       throw new Error(`HTTP ${res.status}: ${res.statusText}`);
@@ -207,14 +211,17 @@ export async function fetchBookById(id) {
     }
     
     const url = `${API_URL}/${id}`;
-    console.log("Fetching book from:", url);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
     
     const res = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
+      signal: controller.signal,
     });
+    clearTimeout(timeoutId);
     
     if (!res.ok) {
       throw new Error(`HTTP ${res.status}: ${res.statusText}`);
@@ -233,7 +240,10 @@ export async function searchBooks(query, limit = 8) {
   try {
     if (!query || !query.trim()) return [];
     const url = `${API_URL}/search?q=${encodeURIComponent(query)}&limit=${limit}`;
-    const res = await fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    const res = await fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' }, signal: controller.signal });
+    clearTimeout(timeoutId);
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
     const data = await res.json();
     const backendBooks = Array.isArray(data)
@@ -269,7 +279,10 @@ export async function searchBooksWithFilters({ query, page = 1, limit = 12, sort
     if (maxPrice !== undefined && maxPrice !== "") params.set("maxPrice", maxPrice);
     if (availability && availability !== "all") params.set("availability", availability);
     const url = `${API_URL}/search?${params.toString()}`;
-    const res = await fetch(url, { method: "GET", headers: { "Content-Type": "application/json" } });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    const res = await fetch(url, { method: "GET", headers: { "Content-Type": "application/json" }, signal: controller.signal });
+    clearTimeout(timeoutId);
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
     const data = await res.json();
     const backendPayload = {

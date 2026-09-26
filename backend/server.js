@@ -19,6 +19,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const chatRoutes  = require("./routes/chatRoutes");
 const aiRoutes = require("./routes/aiRoutes");
 const voiceRoutes = require("./routes/voiceRoutes");
+const { errorHandler, requestLogger } = require("./middlewares/errorMiddleware");
 
 const app = express();
 
@@ -59,7 +60,8 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   return res.sendStatus(204);
 });
-app.use(express.json());
+app.use(express.json({ limit: '5mb' }));
+app.use(requestLogger);
 
 connectDB();
 
@@ -101,6 +103,9 @@ app.use(
   "/admin",
   express.static(path.join(__dirname, "..", "admin-panel"))
 );
+
+// Global error handler (must be after all routes)
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, () => {

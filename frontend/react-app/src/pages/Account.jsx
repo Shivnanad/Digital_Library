@@ -14,6 +14,7 @@ import {
 } from "../services/authService";
 import { useXp } from "../context/XpContext";
 import { fetchBooks } from "../services/bookService";
+import { BACKEND_URL, SOCKET_URL } from "../config/api";
 import "../styles/account.css";
 
 /* ─── helpers ─── */
@@ -451,7 +452,7 @@ export default function Account() {
   useEffect(() => {
     setReadCount(getReadCount(user?.email));
     // Fetch purchased count from backend
-    if (user && localStorage.getItem("token")) {
+    if (user && (localStorage.getItem("token") || sessionStorage.getItem("token"))) {
       getPurchasedBooks()
         .then((books) => setPurchasedCount(books.length))
         .catch(() => setPurchasedCount(getPurchasedCount()));
@@ -781,7 +782,7 @@ export default function Account() {
   const ensureSupportSocket = (conversationId) => {
     if (supportSocketRef.current) return supportSocketRef.current;
 
-    const socket = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:5000", {
+    const socket = io(SOCKET_URL, {
       transports: ["websocket", "polling"],
     });
 
@@ -1755,7 +1756,7 @@ export default function Account() {
         <div className="acc-hero-content">
           <div className={`acc-avatar ${user.profilePic ? "has-pic" : ""}`}>
             {user.profilePic ? (
-              <img src={`http://localhost:5000${user.profilePic}`} alt="Profile" className="acc-avatar-img" />
+              <img src={`${BACKEND_URL}${user.profilePic}`} alt="Profile" className="acc-avatar-img" />
             ) : (
               <span>{getInitials(user.name)}</span>
             )}
